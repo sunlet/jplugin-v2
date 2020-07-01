@@ -57,7 +57,7 @@ public class NotExistsTableTest {
 		AssertKit.assertEqual(0, getCount(conn,"select/*spantable*/ count(*) from tb_route0",null));
 		MaintainReturn lmr = TableExistsMaintainer.lastMaintainResult;
 		AssertKit.assertEqual(false,lmr.isReturnZeroRowUpdateStatement());
-		AssertKit.assertEqual(TableExistsMaintainer.makeCountResult(""),lmr.getTargetSqlForDummy());
+		AssertKit.assertEqual(TableExistsMaintainer.makeCountResult("`count(*)`"),lmr.getTargetSqlForDummy());
 		AssertKit.assertException(()->SQLTemplate.executeSelect(connReal, "select * from tb_route0_1", null)); //表不存在
 		AssertKit.assertException(()->SQLTemplate.executeSelect(connReal, "select * from tb_route0_2", null));
 		

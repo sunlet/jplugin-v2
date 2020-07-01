@@ -190,7 +190,9 @@ public class TableExistsMaintainer {
 						if (alais!=null)
 							countName = expressionItem.getAlias().getName();
 						if (StringKit.isNull(countName)){
-							countName = "";
+//							countName = "";
+							//为了避免count(1),被sql变为count(*), 不用""了,而是使用 `原表达`
+							countName = "`"+exp.toString()+"`";
 						}
 						
 						Boolean isGroupby = ps.getGroupBy()!=null;

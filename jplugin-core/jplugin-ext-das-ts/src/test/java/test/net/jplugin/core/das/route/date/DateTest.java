@@ -22,6 +22,12 @@ public class DateTest {
 		DataSource dataSource = DataSourceFactory.getDataSource("router-db");
 		Connection conn = dataSource.getConnection();
 		Connection connReal = DataSourceFactory.getDataSource("database").getConnection();
+		
+		List<Map<String, String>> result = SQLTemplate.executeSelect(conn, "select /*spantable*/ count(1) from tb_date", null);
+		AssertKit.assertEqual(result.size(),1);
+		AssertKit.assertEqual(result.get(0).get("count(1)"),"0");
+		
+		
 		SQLTemplate.executeInsertSql(conn, "insert into tb_date(f1,f2) values(?,?)",new Object[]{"a",new java.sql.Date(CalenderKit.getTime("20160101010101"))} );
 		SQLTemplate.executeInsertSql(conn, "insert into tb_date(f1,f2) values(?,?)",new Object[]{"b",new java.sql.Date(CalenderKit.getTime("20160102010101"))} );
 		
