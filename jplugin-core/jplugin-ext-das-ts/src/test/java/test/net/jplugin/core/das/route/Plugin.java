@@ -44,6 +44,11 @@ public class Plugin extends AbstractPluginForTest {
 	
 	@Override
 	public void test() throws Throwable {
+		DbCreateStringInt.create();
+		new InsertSelectTest().test();
+		
+		DbCreateStringInt.create();
+		new DeleteTest().test();
 		
 		DbCreateDate.create();
 		new DateTest().test();
@@ -67,12 +72,8 @@ public class Plugin extends AbstractPluginForTest {
 		new DBGroupByTest().test();
 		
 		DbCreateStringInt.create();
-		new InsertSelectTest().test();
-
-		DbCreateStringInt.create();
 		new UpdateTest().test();
-		DbCreateStringInt.create();
-		new DeleteTest().test();
+		
 		
 		new WhereExpressionVisitorTest().test();
 		new VisitorExpressionManagerTest().test();

@@ -134,8 +134,10 @@ public class CountStarWrapper extends EmptyQueryableResultSet{
 		list.close();
 	}
 
+	//对于正常访问，wasNull返回false。 如果调用内层的wasNull,会抛出空指针！ 2020-07-02修复
 	public boolean wasNull() throws SQLException {
-		return list.wasNull();
+		return false;
+//		return list.wasNull();
 	}
 
 	public boolean getBoolean(int columnIndex) throws SQLException {

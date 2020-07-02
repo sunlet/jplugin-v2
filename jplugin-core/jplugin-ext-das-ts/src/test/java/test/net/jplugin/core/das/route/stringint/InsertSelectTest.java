@@ -154,6 +154,8 @@ public class InsertSelectTest {
 				AssertKit.assertEqual(6, getCount(conn,"select count(*) from tb_route1 where f3='a'"));
 			}
 		});
+		//验证一下Count(1)
+		AssertKit.assertEqual(6, getCount(conn,"select count(1) from tb_route1 /*spantable*/",new Object[]{}));
 		
 		new LimitTest().test();
 	}

@@ -1,5 +1,6 @@
 package test.net.jplugin.core.das.route.stringint;
 
+import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,7 +39,31 @@ public class DeleteTest {
 		AssertKit.assertEqual(0,SQLTemplate.executeDeleteSql(conn, "delete from  tb_route0 where f1=?", new Object[]{"aa"}));
 		AssertKit.assertEqual(0,SQLTemplate.executeDeleteSql(conn, "delete from  tb_route0 where f1='aa'", null));
 		AssertKit.assertEqual(0,SQLTemplate.executeDeleteSql(conn, "delete from  tb_route0 where f1=?", new Object[]{"aa"}));
+		
+		SQLTemplate.executeDeleteSql(conn, "delete from tb_route1 /*spantable*/", null);
+		testWasNull(conn);
 	}	
+
+	private void testWasNull(Connection conn) throws SQLException {
+		java.sql.Statement stmt=null;
+		ResultSet rs = null;
+		try {
+			stmt = conn.createStatement();
+//			rs = stmt.executeQuery("select count(1) from tb_route0 /*spantable*/");
+//			rs.next();
+//			AssertKit.assertEqual(0, rs.getInt("count(1)"));
+			
+			rs = stmt.executeQuery("select count(*) from tb_route1 /*spantable*/");
+			rs.next();
+			AssertKit.assertEqual(0, rs.getInt("count(*)"));
+			rs.wasNull();
+			
+		}finally {
+			if (rs!=null) try{rs.close();}catch(Exception e) {}
+			if (stmt!=null) try{stmt.close();}catch(Exception e) {}
+		}
+		
+	}
 
 	int getCount(Connection conn,String s){
 		return getCount(conn,s,null);
