@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.jplugin.mvn</groupId>
+	<artifactId>jplugin-core</artifactId>
+	<version>2.0.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.jplugin.core</groupId>
+			<artifactId>jplugin-ext-event</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.jplugin.core</groupId>
+			<artifactId>jplugin-ext-das-ts</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.jplugin.core</groupId>
+			<artifactId>jplugin-common-kits</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.jplugin.core</groupId>
+			<artifactId>jplugin-common-kits-http</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.jplugin.core</groupId>
+			<artifactId>jplugin-core-config</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.jplugin.core</groupId>
+			<artifactId>jplugin-core-ctx</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.jplugin.core</groupId>
+			<artifactId>jplugin-core-das</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.jplugin.core</groupId>
+			<artifactId>jplugin-core-kernel</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.jplugin.core</groupId>
+			<artifactId>jplugin-core-log</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.jplugin.core</groupId>
+			<artifactId>jplugin-core-rclient</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.jplugin.core</groupId>
+			<artifactId>jplugin-core-service</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<!-- <dependency> <groupId>net.jplugin.core</groupId> <artifactId>jplugin-ext-das-hib</artifactId> 
+			<version>1.0.0</version> </dependency> -->
+
+		<dependency>
+			<groupId>net.jplugin.core</groupId>
+			<artifactId>jplugin-ext-das-mybatis</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.jplugin.core</groupId>
+			<artifactId>jplugin-ext-gtrace</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.jplugin.core</groupId>
+			<artifactId>jplugin-ext-mtenant</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<!-- <dependency> <groupId>net.jplugin.core</groupId> <artifactId>jplugin-ext-token</artifactId> 
+			<version>1.0.0</version> </dependency> -->
+		<dependency>
+			<groupId>net.jplugin.core</groupId>
+			<artifactId>jplugin-ext-webasic</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<configuration>
+					<createDependencyReducedPom>true</createDependencyReducedPom>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<createSourcesJar>true</createSourcesJar>
+							<promoteTransitiveDependencies>true</promoteTransitiveDependencies>
+							<!-- 包含要合并的模块 -->
+							<artifactSet>
+								<includes>
+									<include>net.jplugin.core:jplugin-ext-das-ts</include>
+									<include>net.jplugin.core:jplugin-common-kits</include>
+									<include>net.jplugin.core:jplugin-common-kits-http</include>
+									<include>net.jplugin.core:jplugin-core-config</include>
+									<include>net.jplugin.core:jplugin-core-ctx</include>
+									<include>net.jplugin.core:jplugin-core-das</include>
+									<include>net.jplugin.core:jplugin-core-kernel</include>
+									<include>net.jplugin.core:jplugin-core-log</include>
+									<include>net.jplugin.core:jplugin-core-rclient</include>
+									<include>net.jplugin.core:jplugin-core-service</include>
+									<!-- <include>net.jplugin.core:jplugin-ext-das-hib</include> -->
+									<include>net.jplugin.core:jplugin-ext-das-mybatis</include>
+									<include>net.jplugin.core:jplugin-ext-gtrace</include>
+									<include>net.jplugin.core:jplugin-ext-mtenant</include>
+									<!-- <include>net.jplugin.core:jplugin-ext-token</include> -->
+									<include>net.jplugin.core:jplugin-ext-webasic</include>
+									<include>net.jplugin.core:jplugin-ext-event</include>
+								</includes>
+							</artifactSet>
+							<!-- 包含号合并的资源文件 -->
+							<!-- >transformers> <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer"> 
+								<resource>META-INF/xxxxx </resource> </transformer> </transformers -->
+
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
