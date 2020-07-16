@@ -7,21 +7,23 @@
 	<parent>
 		<groupId>net.jplugin.core</groupId>
 		<artifactId>base</artifactId>
-		<version>${projectVersion}</version>
+		<version>0.0.2-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>jplugin-core-log</artifactId>
-
+	<properties>
+		
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>jplugin-core-service</artifactId>
-			<version>${projectVersion}</version>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>jplugin-core-config</artifactId>
-			<version>${projectVersion}</version>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>

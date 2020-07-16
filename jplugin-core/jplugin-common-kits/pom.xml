@@ -7,10 +7,13 @@
 	<parent>
 		<groupId>net.jplugin.core</groupId>
 		<artifactId>base</artifactId>
-		<version>${projectVersion}</version>
+		<version>0.0.2-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>jplugin-common-kits</artifactId>
+	<properties>
+		
+	</properties>
 
 	<dependencies>
 		<dependency>

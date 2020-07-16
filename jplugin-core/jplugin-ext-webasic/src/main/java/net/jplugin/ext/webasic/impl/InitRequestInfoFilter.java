@@ -12,7 +12,7 @@ import net.jplugin.core.ctx.api.RuleServiceFactory;
 import net.jplugin.core.kernel.api.PluginEnvirement;
 import net.jplugin.core.kernel.api.ctx.RequesterInfo;
 import net.jplugin.core.kernel.api.ctx.ThreadLocalContextManager;
-import net.jplugin.ext.token.api.ITokenService;
+//import net.jplugin.ext.token.api.ITokenService;
 import net.jplugin.ext.webasic.api.WebFilter;
 
 /**
@@ -40,6 +40,8 @@ public class InitRequestInfoFilter implements WebFilter {
 			res.addHeader("Access-Control-Allow-Origin",acaoCfg);
 		
 		ThreadLocalContextManager.getRequestInfo().setCurrentTenantId(req.getParameter("_gid"));
+		return true;
+		/*
 		String _tk = req.getParameter("_tk");
 		if (_tk!=null){
 			ITokenService tksvc = RuleServiceFactory.getRuleService(ITokenService.class);
@@ -68,8 +70,9 @@ public class InitRequestInfoFilter implements WebFilter {
 				return true;
 			}else
 				return true;
+				
 		}
-			
+			*/
 //		RequesterInfo info = ThreadLocalContextManager.instance.getContext().getRequesterInfo();
 //		info.setToken(req.getParameter(TOKEN));
 //		info.setClientType(req.getParameter(CLIENTTYPE));
