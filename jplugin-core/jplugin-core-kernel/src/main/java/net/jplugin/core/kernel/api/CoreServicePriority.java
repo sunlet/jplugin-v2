@@ -7,6 +7,9 @@ package net.jplugin.core.kernel.api;
  **/
 
 public class CoreServicePriority {
+	//-5000到-1 留给Jplugin extension
+	public static final int OFFSET_FOR_EXTENSION=-5000;
+	//-10000到-5001 留给core
 	private static final int OFFSET = -10000;
 	public static final int KERNEL = 0 + OFFSET;
 	public static final int SERVICE = 10 + OFFSET;
