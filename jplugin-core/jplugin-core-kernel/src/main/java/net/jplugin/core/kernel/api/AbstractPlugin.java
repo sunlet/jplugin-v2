@@ -35,6 +35,29 @@ public abstract class AbstractPlugin implements IPlugin {
 		}
 	}
 	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("\n").append(this.getName());
+		sb.append("\n  ExtensionPoints:");
+		for (int i=0;i<this.extensionPoints.size();i++) {
+			ExtensionPoint p = extensionPoints.get(i);
+			sb.append("\n    ");
+			sb.append(p.getName());
+		}
+		
+		sb.append("\n  Extensions:");
+		for (int i=0;i<this.extensions.size();i++) {
+			Extension e = extensions.get(i);
+			sb.append("\n    ").append("[");
+			sb.append(e.getExtensionPointName()).append(" ");
+			sb.append(e.getClazz().getName());
+			sb.append("]");
+		}
+		
+		return sb.toString();
+		
+	}
+	
 	@Override
 	public void onCreateServices() {
 	}

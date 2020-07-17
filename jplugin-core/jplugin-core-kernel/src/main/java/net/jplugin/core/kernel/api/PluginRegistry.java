@@ -25,6 +25,17 @@ public class PluginRegistry {
 	private Hashtable<String, ExtensionPoint> extensionPointMap =  new Hashtable<String, ExtensionPoint>();
 	private Map<String,AbstractPlugin> loadedPluginMap = new Hashtable<String, AbstractPlugin>();
 	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		for (int i=0;i<pluginList.size();i++) {
+			sb.append("\n");
+			sb.append(pluginList.get(i));
+		}
+		return sb.toString();
+	}
+	
+
+
 	public List<PluginError> getErrors(){
 		return this.errorList;
 	}
