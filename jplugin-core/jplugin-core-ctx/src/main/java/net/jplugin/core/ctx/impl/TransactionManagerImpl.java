@@ -50,7 +50,7 @@ public class TransactionManagerImpl implements TransactionManager {
 			 }
 		 }catch(Throwable e){
 			 rollbackPreviousSilently(pos-1);
-			 throw new TxRuntimeException("启动事物发生异常",e);
+			 throw new TxRuntimeException("启动事务发生异常",e);
 		 }
 		 
 		 //成功了再设定状态
@@ -70,7 +70,7 @@ public class TransactionManagerImpl implements TransactionManager {
 			throw new RollBackException("tx marked roll back");
 		}
 		
-		//执行提交前的事物同步，如果发生异常，则抛出异常
+		//执行提交前的事务同步，如果发生异常，则抛出异常
 		txObject.get().notifyBeforeCompletion();
 		
 		
@@ -83,7 +83,7 @@ public class TransactionManagerImpl implements TransactionManager {
 			}
 		}catch(Throwable e){
 			commitFollowingsSilently(pos+1);
-			theException = new TxRuntimeException(handlers.length>1? "事物提交异常，因为有多个事物处理器，可能不完全提交":"事物提交异常",e);
+			theException = new TxRuntimeException(handlers.length>1? "事务提交异常，因为有多个事务处理器，可能不完全提交":"事务提交异常",e);
 			throw theException;
 		}finally{
 			//无论如何都设定状态
@@ -113,7 +113,7 @@ public class TransactionManagerImpl implements TransactionManager {
 			}
 		} catch (Throwable e) {
 			rollbackFollowingsSilently(pos);
-			theException = new TxRuntimeException(handlers.length>1? "事物回滚异常，因为有多个事物处理器，可能不完全回滚":"事物回滚异常", e);
+			theException = new TxRuntimeException(handlers.length>1? "事务回滚异常，因为有多个事务处理器，可能不完全回滚":"事务回滚异常", e);
 			throw theException;
 		} finally {
 			//无论如何都设定状态
@@ -134,7 +134,7 @@ public class TransactionManagerImpl implements TransactionManager {
 			 try{
 				 handlers[i].doCommit();
 			 }catch(Throwable th){
-				 getLogger().error("提交后续事物处理器时异常",th);
+				 getLogger().error("提交后续事务处理器时异常",th);
 			 }
 		 }
 	}
@@ -154,7 +154,7 @@ public class TransactionManagerImpl implements TransactionManager {
 			 try{
 				 handlers[i].doRollback();
 			 }catch(Throwable th){
-				 getLogger().error("回滚前驱事物处理器时异常",th);
+				 getLogger().error("回滚前驱事务处理器时异常",th);
 			 }
 		 }
 	}
@@ -173,7 +173,7 @@ public class TransactionManagerImpl implements TransactionManager {
 			 try{
 				 handlers[i].doRollback();
 			 }catch(Throwable th){
-				 getLogger().error("回滚后续事物处理器时异常",th);
+				 getLogger().error("回滚后续事务处理器时异常",th);
 			 }
 		 }
 	}
