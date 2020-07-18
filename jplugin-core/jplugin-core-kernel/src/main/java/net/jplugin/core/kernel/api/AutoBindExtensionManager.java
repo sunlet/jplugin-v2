@@ -1,7 +1,10 @@
 package net.jplugin.core.kernel.api;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,21 +43,17 @@ public class AutoBindExtensionManager {
 			if (transformers.isEmpty()) 
 				return;
 			
-			List<Extension> extensionList = new ArrayList();
-			p.filterContainedClassesByChecker(p.getClass().getPackage().getName(),(c)->{
+			p.filterContainedClassesByChecker(null,(c)->{
 				//假定大部分都没Annotation,所以先获取所有的anno，这样性能更好
 				Annotation[] annos = c.getAnnotations();
 				if (annos==null || annos.length==0) {
 					//do nothing
 				}else {
 					for (Annotation a:annos) {
-						extensionList.clear();
-						IBindAnnotationTransformer trans = transformers.get(a.getClass());
+						IBindAnnotationTransformer trans = transformers.get(a.annotationType());
 						if (trans!=null) {
-							trans.transform(c, a, extensionList);
-							for (Extension ext:extensionList) {
-								addExtensionAndLog(p,ext,c,a);
-							}
+							trans.transform(p, c, a);
+							addExtensionAndLog(p,c,a);
 						}
 					}
 				}
@@ -63,27 +62,45 @@ public class AutoBindExtensionManager {
 			});
 		}
 
-		private void addExtensionAndLog(AbstractPlugin p, Extension ext, Class c, Annotation a){
-			p.addExtension(ext);
+		private void addExtensionAndLog(AbstractPlugin p, Class c, Annotation a){
 			StringBuffer sb = new StringBuffer("$$$ Auto add extension for ");
-			sb.append(a.getClass().getSimpleName());
-			sb.append(" class=").append(c.getClass().getSimpleName());
-			Field[] fields = a.getClass().getDeclaredFields();
-			for (Field f:fields) {
+			sb.append(a.annotationType().getSimpleName());
+			sb.append(" class=").append(c.getSimpleName());
+//			sb.append("   ").append(a);
+			Method[] methods = a.annotationType().getDeclaredMethods();
+			for (Method f:methods) {
 				String name = f.getName();
 				Object v;
 				try {
-					v = f.get(a);
-					sb.append(" "+name+"=");
-					sb.append(v.toString());
+					v = f.invoke(a, new Object[] {});
+					if (v.getClass().isArray()) {
+						sb.append(" "+name+"= { ");
+						sb.append(getArrayString(v));
+						sb.append(" }");
+					}else {
+						sb.append(" "+name+"=");
+						sb.append(v.toString());
+					}
 				} catch (IllegalArgumentException e) {
 					throw new RuntimeException("Error when transorm anno."+sb.toString(),e);
 				} catch (IllegalAccessException e) {
+					throw new RuntimeException("Error when transorm anno."+sb.toString(),e);
+				} catch (InvocationTargetException e) {
 					throw new RuntimeException("Error when transorm anno."+sb.toString(),e);
 				}
 				
 			}
 			PluginEnvirement.getInstance().getStartLogger().log(sb);
+		}
+
+		private String getArrayString(Object array) {
+			StringBuffer sb =new StringBuffer();
+			int len = Array.getLength(array);
+			for (int i=0;i<len ;i++) {
+				Object obj = Array.get(array, i);
+				sb.append(obj).append("  ");
+			}
+			return sb.toString();
 		}
 	}
 }

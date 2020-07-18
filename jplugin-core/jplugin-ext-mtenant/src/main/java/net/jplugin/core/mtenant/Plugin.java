@@ -71,7 +71,8 @@ public class Plugin extends AbstractPlugin{
 		
 		this.addExtensionPoint(ExtensionPoint.create(EP_TENANTLIST_PROVIDOR, ITenantListProvidor.class));
 		this.addExtensionPoint(ExtensionPoint.create(EP_TENANT_STORESTG_PROVIDOR, ITenantStoreStrategyProvidor.class));
-
+		
+		ExtensionDasHelper.addDynamisDataSourceTypeExtension(this, "mt-dds", net.jplugin.core.mtenant.dds.MultitenantDynamicDataSource.class);
 
 		if (MtenantStatus.enabled()){
 			
