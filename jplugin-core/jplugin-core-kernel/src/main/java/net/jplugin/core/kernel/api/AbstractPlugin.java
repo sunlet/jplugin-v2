@@ -86,6 +86,7 @@ public abstract class AbstractPlugin implements IPlugin {
 
 	public void addExtension(Extension e) {
 		this.extensions.add(e);
+		ExtensionFactory.setLastExtension(e);
 	}
 
 	public void addConfigure(String name,String val){

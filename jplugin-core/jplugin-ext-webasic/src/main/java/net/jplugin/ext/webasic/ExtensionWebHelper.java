@@ -1,9 +1,11 @@
 package net.jplugin.ext.webasic;
 
+import net.jplugin.common.kits.StringKit;
 import net.jplugin.common.kits.reso.ResolverKit;
 import net.jplugin.core.kernel.api.AbstractPlugin;
 import net.jplugin.core.kernel.api.ClassDefine;
 import net.jplugin.core.kernel.api.Extension;
+import net.jplugin.core.kernel.api.ExtensionFactory;
 import net.jplugin.core.kernel.api.PluginEnvirement;
 import net.jplugin.ext.webasic.api.AbstractExController;
 import net.jplugin.ext.webasic.api.BindController;
@@ -145,6 +147,9 @@ public class ExtensionWebHelper {
 			PluginEnvirement.INSTANCE.getStartLogger()
 			.log("$$$ Auto add extension for service export : servicePath=" + anno.path() + " class="
 					+ c.getName());
+			if (StringKit.isNotNull(anno.id())) {
+				ExtensionFactory.setLastId(anno.id());
+			}
 		}
 	}
 	
@@ -163,11 +168,19 @@ public class ExtensionWebHelper {
 				PluginEnvirement.INSTANCE.getStartLogger()
 						.log("$$$ Auto add extension for web ex controller : servicePath=" + anno.path() + " class="
 								+ c.getName());
+				
+				if (StringKit.isNotNull(anno.id())) {
+					ExtensionFactory.setLastId(anno.id());
+				}
 			} else {
 				ExtensionWebHelper.addWebControllerExtension(p, anno.path(), c);
 				PluginEnvirement.INSTANCE.getStartLogger()
 						.log("$$$ Auto add extension for web controller : servicePath=" + anno.path() + " class="
 								+ c.getName());
+				
+				if (StringKit.isNotNull(anno.id())) {
+					ExtensionFactory.setLastId(anno.id());
+				}
 			}
 		}
 	}

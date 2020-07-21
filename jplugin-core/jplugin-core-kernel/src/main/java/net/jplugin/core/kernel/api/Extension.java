@@ -24,7 +24,7 @@ public class Extension {
 	Vector<Property> propertyList=new Vector<Property>(1);
 	
 	Object extensionObject;
-
+	
 	
 	@Override
 	public String toString() {
@@ -204,6 +204,25 @@ public class Extension {
 		}
 		return ext;
 	}
+	
+	/**
+	 * Extension Id相关的方法和属性
+	 */
+	private  String id;
+	
+	public String getId() {
+		return id;
+	}
+	
+	/**
+	 * 不提供public方法，请调用ExtensionFactory的方法
+	 * @param o
+	 */
+	void setId(String o) {
+		this.id = o;
+	}
+	
+
 	
 	public static void main(String[] args) {
 		Extension e1 = Extension.create("a", Extension.class,new String[][] {{"a1","b1"},{"a2","v2"}});

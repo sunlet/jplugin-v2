@@ -41,6 +41,9 @@ public class WebExController implements IController{
 	private static Class[] para=new Class[]{};
 	private AbstractExController object;
 	
+	public Object getObject() {
+		return this.object;
+	}
 	/**
 	 * @param value
 	 */

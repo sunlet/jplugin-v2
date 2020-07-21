@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.jplugin.core.kernel.api.ClassDefine;
+import net.jplugin.core.kernel.api.ExtensionFactory;
 import net.jplugin.core.kernel.api.PluginEnvirement;
 import net.jplugin.ext.webasic.api.IController;
 import net.jplugin.ext.webasic.api.IControllerSet;
@@ -29,7 +30,11 @@ public class WebExControllerSet implements IControllerSet{
 		controllerMap = new ConcurrentHashMap<String, IController>();
 		
 		for (Entry<String, ClassDefine> en:defs.entrySet()){
-			controllerMap.put(en.getKey(), new WebExController(en.getValue()));
+			WebExController exController = new WebExController(en.getValue());
+			controllerMap.put(en.getKey(), exController);
+			
+			//重新设置value值
+			ExtensionFactory.resetValue(en.getValue(), exController.getObject());
 		}
 	}
 	
