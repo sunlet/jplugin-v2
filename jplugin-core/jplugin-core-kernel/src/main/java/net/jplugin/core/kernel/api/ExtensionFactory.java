@@ -40,7 +40,12 @@ public class ExtensionFactory {
 	}
 	
 	/**
-	 * id一定是已经存在的，并且只能在disabledModify=true情况下
+	 * <PRE>
+	 * id一定是已经存在的，并且只能在disabledModify=true情况下。
+	 * 注意：
+	 * 目前的情况下，可以保证同一个ID指向的对象肯定是只有一个。
+	 * 但不不同的ID可能指向同一个对象。比如对于 RuleInterceptor 和 WebController的Extension.
+	 * </PRE>
 	 * @param id
 	 * @param value
 	 */
@@ -72,6 +77,9 @@ public class ExtensionFactory {
 			List<Extension> exts = plugin.getExtensions();
 			for (Extension ext:exts) {
 				Object extObject = ext.getObject();
+				/**
+				 * 一定要把Class和String过滤掉，因为这些ExtensionObject不是new出来的对象。可能出现不同的Key指向相同的ExtensionObject。这样在reset的时候，同一个Key可能被调用多次。这样key指向的结果就不可预料了！
+				 */
 				if (extObject instanceof Class || extObject instanceof String) {
 					if (StringKit.isNotNull(ext.getId())) {
 						throw new RuntimeException("Extension with type Class or String can't have id: Plugin:"+plugin.getName()+" RefExtensionPoint:"+ext.getExtensionPointName());
