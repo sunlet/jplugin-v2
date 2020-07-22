@@ -63,10 +63,13 @@ public class Extension {
 					&&
 					 StringKit.eqOrNull(name, e.name)
 					&&
-					 checkPropertyDup(propertyList,e.propertyList);
+					 checkPropertyDup(propertyList,e.propertyList)
+					&& 
+					 StringKit.eqOrNull(this.id,e.id);
 		}
 	}
 		
+
 	private boolean checkPropertyDup(Vector<Property> p1, Vector<Property> p2) {
 		//長度不同
 		if (p1.size()!=p2.size()) 

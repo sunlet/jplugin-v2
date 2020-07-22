@@ -1,11 +1,13 @@
 package net.jplugin.core.ctx.impl.filter4clazz;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import net.jplugin.common.kits.SortUtil;
 import net.jplugin.core.ctx.api.AbstractRuleMethodInterceptor;
 import net.jplugin.core.kernel.api.Extension;
+import net.jplugin.core.kernel.api.ExtensionFactory;
 import net.jplugin.core.kernel.api.IPropertyFilter;
 import net.jplugin.core.kernel.api.PluginEnvirement;
 
@@ -17,9 +19,17 @@ public class RuleCallFilterDefineManager {
 	List<RuleCallFilterDefine> defList;
 
 	public void initialize() {
+		
+		HashMap<Class,AbstractRuleMethodInterceptor> filterInstanceMap = new HashMap();
+		
 		defSetList = PluginEnvirement.getInstance().getExtensionObjects(net.jplugin.core.ctx.Plugin.EP_RULE_METHOD_INTERCEPTOR,RuleCallFilterDefineBean.class);
 		defList = new ArrayList();
 		for (RuleCallFilterDefineBean ds : defSetList) {
+			//get filter instance
+			AbstractRuleMethodInterceptor instance = getOrCreateFilterInstance(ds.getFilterClass(),filterInstanceMap);
+			ExtensionFactory.resetValue(ds, instance);
+			//get filter instance ok
+			
 			List<RuleCallFilterDefine> list ;
 			try{
 //				list = RuleCallFilterDefine.parse(filterProperty(ds.getApplyTo()));
@@ -34,6 +44,10 @@ public class RuleCallFilterDefineManager {
 				}
 				cmfd.setPriority(ds.getPriority());
 				cmfd.setFilterClazz(ds.getFilterClass());
+				
+				//設置filterinstance
+				cmfd.setFilterInstance(instance);
+				
 				defList.add(cmfd);
 			}
 		}
@@ -48,6 +62,21 @@ public class RuleCallFilterDefineManager {
 //		else
 //			return applyTo;
 //	}
+
+	private AbstractRuleMethodInterceptor getOrCreateFilterInstance(Class filterClazz,
+			HashMap<Class, AbstractRuleMethodInterceptor> cache) {
+		AbstractRuleMethodInterceptor inteceptor = cache.get(filterClazz);
+		if (inteceptor == null){
+			try{
+				inteceptor = (AbstractRuleMethodInterceptor) filterClazz.newInstance();
+				PluginEnvirement.INSTANCE.resolveRefAnnotation(inteceptor);
+				cache.put(filterClazz, inteceptor);
+			}catch(Exception e){
+				throw new RuntimeException("can't init object :"+filterClazz.getName(),e);
+			}
+		}
+		return inteceptor;
+	}
 
 	/**
 	 * 过滤出来，排个序，返回

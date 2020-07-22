@@ -47,6 +47,12 @@ public class ExtensionIdTest {
 		efit.aaa();
 		
 		
+		RuleMethodInterceptorForIdTest rmift = ExtensionFactory.get("RuleMethodInterceptorForIdTest1",RuleMethodInterceptorForIdTest.class);
+		AssertKit.assertNotNull(rmift, "rmift");
+		rmift.aaa();
+		
+		RuleMethodInterceptorForIdTest rmift2 = ExtensionFactory.get("RuleMethodInterceptorForIdTest2",RuleMethodInterceptorForIdTest.class);
+		AssertKit.assertTrue(rmift==rmift2);
 		
 	}
 

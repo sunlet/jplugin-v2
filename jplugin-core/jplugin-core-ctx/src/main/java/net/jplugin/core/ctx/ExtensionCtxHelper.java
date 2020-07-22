@@ -86,6 +86,11 @@ public class ExtensionCtxHelper {
 		
 		PluginEnvirement.INSTANCE.getStartLogger().log("$$$ Auto add extension for RuleMethodFilter: filterClass="
 					+ c.getName() + " applyTo=" + applyTo+" priority="+priority);
+		
+
+		if (StringKit.isNotNull(anno.id())) {
+			ExtensionFactory.setLastId(anno.id());
+		}
 	}
 	
 	/**
