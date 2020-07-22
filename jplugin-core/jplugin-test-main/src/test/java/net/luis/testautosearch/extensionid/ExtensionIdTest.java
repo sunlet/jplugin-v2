@@ -2,8 +2,9 @@ package net.luis.testautosearch.extensionid;
 
 import net.jplugin.common.kits.AssertKit;
 import net.jplugin.core.kernel.api.ExtensionFactory;
+import net.jplugin.core.kernel.api.IStartup;
 
-public class ExtensionTestTest {
+public class ExtensionIdTest {
 
 	public static void assertExceptionInCreateService() {
 		AssertKit.assertException(()->{
@@ -29,6 +30,24 @@ public class ExtensionTestTest {
 		o = ExtensionFactory.get("WebExControllerTest");
 		AssertKit.assertNotNull(o, "o");
 		((WebExControllerTest)o).aa();
+		
+		
+		IService1ForId svc = ExtensionFactory.get("IService1ForId",IService1ForId.class);
+		svc.a();
+		
+		IRuleServiceForId rs = ExtensionFactory.get("IRuleServiceForId",IRuleServiceForId.class);
+		rs.a();
+		
+		IStartup bs = ExtensionFactory.get("BindStartUpForId",IStartup.class);
+		AssertKit.assertNotNull(bs, "startup");
+		
+		
+		IExtensionForIdTest efit = ExtensionFactory.get("ExtensionForIdTest",IExtensionForIdTest.class);
+		AssertKit.assertNotNull(efit, "efit");
+		efit.aaa();
+		
+		
+		
 	}
 
 }

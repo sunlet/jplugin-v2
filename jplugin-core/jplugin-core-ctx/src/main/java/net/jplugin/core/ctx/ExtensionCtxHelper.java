@@ -19,6 +19,7 @@ import net.jplugin.core.ctx.impl.filter4clazz.RuleCallFilterDefineBean;
 import net.jplugin.core.ctx.kits.PropertyFilterKits;
 import net.jplugin.core.kernel.api.AbstractPlugin;
 import net.jplugin.core.kernel.api.Extension;
+import net.jplugin.core.kernel.api.ExtensionFactory;
 import net.jplugin.core.kernel.api.PluginEnvirement;
 
 /**
@@ -120,6 +121,10 @@ public class ExtensionCtxHelper {
 			addRuleExtension(p, anno.name(),interfaceClazz, c);
 			PluginEnvirement.INSTANCE.getStartLogger().log("$$$ Auto add extension for rule service: interface="
 					+ interfaceClazz.getName() + " impl=" + c.getName());
+		}
+		
+		if (StringKit.isNotNull(anno.id())) {
+			ExtensionFactory.setLastId(anno.id());
 		}
 	}
 

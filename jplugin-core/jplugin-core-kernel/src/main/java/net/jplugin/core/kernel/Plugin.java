@@ -1,11 +1,13 @@
 package net.jplugin.core.kernel;
 
+import net.jplugin.common.kits.StringKit;
 import net.jplugin.common.kits.http.filter.IHttpClientFilter;
 import net.jplugin.core.kernel.api.AbstractPlugin;
 import net.jplugin.core.kernel.api.AutoBindExtensionManager;
 import net.jplugin.core.kernel.api.BindStartup;
 import net.jplugin.core.kernel.api.CoreServicePriority;
 import net.jplugin.core.kernel.api.Extension;
+import net.jplugin.core.kernel.api.ExtensionFactory;
 import net.jplugin.core.kernel.api.ExtensionKernelHelper;
 import net.jplugin.core.kernel.api.ExtensionPoint;
 import net.jplugin.core.kernel.api.IAnnoForAttrHandler;
@@ -47,6 +49,10 @@ public class Plugin extends AbstractPlugin{
 		AutoBindExtensionManager.INSTANCE.addBindExtensionTransformer(BindStartup.class, (plugin,clazz,anno)->{
 			BindStartup bsAnno = (BindStartup) anno;
 			plugin.addExtension(Extension.create(EP_STARTUP, clazz));
+			
+			if (StringKit.isNotNull(bsAnno.id())) {
+				ExtensionFactory.setLastId(bsAnno.id());
+			}
 		});
 	}
 	
