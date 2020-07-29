@@ -19,6 +19,8 @@ import test.net.jplugin.ext.webasic.annotation.WebExControllerTest;
 import test.net.jplugin.ext.webasic.bind.TestBind;
 import test.net.jplugin.ext.webasic.dynamicmethod.DynamicMethodTest;
 import test.net.jplugin.ext.webasic.dynamicmethod.TestDynamicMethodClient;
+import test.net.jplugin.ext.webasic.mapreturn.ExportForMapBeanTest;
+import test.net.jplugin.ext.webasic.mapreturn.ExportForMapReturn;
 import test.net.jplugin.ext.webasic.mttest.MtTestClient;
 import test.net.jplugin.ext.webasic.mttest.MtTestForRequest;
 import test.net.jplugin.ext.webasic.restclient.IService;
@@ -64,6 +66,7 @@ public class Plugin extends AbstractPluginForTest{
 		ExtensionWebHelper.autoBindControllerExtension(this, ".bind");
 		ExtensionWebHelper.autoBindServiceExportExtension(this, ".bind");
 		
+		ExtensionWebHelper.addServiceExportExtension(this, "/mapreturn", ExportForMapReturn.class);
 	}
 
 	@Override
@@ -72,6 +75,8 @@ public class Plugin extends AbstractPluginForTest{
 	}
 
 	public void test() throws IOException, HttpStatusException, InterruptedException, ExecutionException {
+		
+		new ExportForMapBeanTest().test();
 		
 		RestMethod4Pojo.test();
 		new TestRestClient().test();
