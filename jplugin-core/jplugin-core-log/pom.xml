@@ -53,6 +53,22 @@
 				</executions>
 			</plugin>
 		</plugins>
+		
+		
+		<resources>
+            <!-- 这个元素描述了项目相关或测试相关的所有资源路径 -->
+            <resource>
+                <!-- 描述存放资源的目录，该路径相对POM路径 -->
+                <directory>src/main/java</directory>
+                <!-- 包含的模式列表，例如**/*.xml. -->
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+                <!-- 是否使用参数值代替参数名。参数值取自properties元素或者文件里配置的属性，文件在filters元素里列出。 -->
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+		
 	</build>
 
 </project>
