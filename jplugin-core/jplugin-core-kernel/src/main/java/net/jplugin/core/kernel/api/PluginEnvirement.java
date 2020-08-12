@@ -244,7 +244,7 @@ public class PluginEnvirement {
 			registry.valid();
 			this.stateLevel = STAT_LEVEL_LOADING;
 			registry.load();
-			ExtensionFactory.initFromPluginList();//所有Extension加入ExtensionFactory
+			Beans.initFromPluginList();//所有Extension加入ExtensionFactory
 			
 			this.stateLevel = STAT_LEVEL_WIRING;
 			registry.wire();

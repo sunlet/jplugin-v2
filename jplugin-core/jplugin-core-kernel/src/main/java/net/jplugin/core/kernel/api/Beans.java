@@ -7,7 +7,7 @@ import java.util.Set;
 
 import net.jplugin.common.kits.StringKit;
 
-public class ExtensionFactory {
+public class Beans {
 	static HashMap<String,Object> initiateMap=new HashMap<String, Object>();
 	static HashMap<Object,Object> resetingMap=new HashMap<Object, Object>();
 

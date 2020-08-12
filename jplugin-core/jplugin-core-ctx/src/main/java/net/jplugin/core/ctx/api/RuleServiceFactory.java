@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 import net.jplugin.core.ctx.impl.DefaultRuleInvocationHandler;
 import net.jplugin.core.ctx.impl.RuleInterceptor;
-import net.jplugin.core.kernel.api.ExtensionFactory;
+import net.jplugin.core.kernel.api.Beans;
 import net.jplugin.core.kernel.api.PluginEnvirement;
 
 /**
@@ -48,7 +48,7 @@ public class RuleServiceFactory {
 				throw new CtxRuntimeException("Create proxy failed",e);
 			}
 			Object proxy = RuleInterceptor.getProxyInstance(def.getInterf(),realImpl,new DefaultRuleInvocationHandler());
-			ExtensionFactory.resetValue(def, realImpl);
+			Beans.resetValue(def, realImpl);
 			svcMap.put(en.getKey(),proxy);
 		}
 //		for (int i=0;i<defs.length;i++){

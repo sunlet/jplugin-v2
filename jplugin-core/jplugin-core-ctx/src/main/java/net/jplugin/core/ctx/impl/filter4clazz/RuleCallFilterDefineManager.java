@@ -7,7 +7,7 @@ import java.util.List;
 import net.jplugin.common.kits.SortUtil;
 import net.jplugin.core.ctx.api.AbstractRuleMethodInterceptor;
 import net.jplugin.core.kernel.api.Extension;
-import net.jplugin.core.kernel.api.ExtensionFactory;
+import net.jplugin.core.kernel.api.Beans;
 import net.jplugin.core.kernel.api.IPropertyFilter;
 import net.jplugin.core.kernel.api.PluginEnvirement;
 
@@ -27,7 +27,7 @@ public class RuleCallFilterDefineManager {
 		for (RuleCallFilterDefineBean ds : defSetList) {
 			//get filter instance
 			AbstractRuleMethodInterceptor instance = getOrCreateFilterInstance(ds.getFilterClass(),filterInstanceMap);
-			ExtensionFactory.resetValue(ds, instance);
+			Beans.resetValue(ds, instance);
 			//get filter instance ok
 			
 			List<RuleCallFilterDefine> list ;

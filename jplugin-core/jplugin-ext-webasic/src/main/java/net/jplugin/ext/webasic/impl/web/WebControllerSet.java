@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.jplugin.core.kernel.api.ExtensionFactory;
+import net.jplugin.core.kernel.api.Beans;
 import net.jplugin.core.kernel.api.PluginEnvirement;
 import net.jplugin.ext.webasic.api.IController;
 import net.jplugin.ext.webasic.api.IControllerSet;
@@ -35,7 +35,7 @@ public class WebControllerSet implements IControllerSet{
 			controllerMap.put(en.getKey(), controller);
 			
 			//重新设置value值
-			ExtensionFactory.resetValue(en.getValue(), controller.getObject());
+			Beans.resetValue(en.getValue(), controller.getObject());
 		}
 	}
 	

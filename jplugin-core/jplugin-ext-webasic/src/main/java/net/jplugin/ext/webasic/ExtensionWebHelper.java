@@ -5,7 +5,7 @@ import net.jplugin.common.kits.reso.ResolverKit;
 import net.jplugin.core.kernel.api.AbstractPlugin;
 import net.jplugin.core.kernel.api.ClassDefine;
 import net.jplugin.core.kernel.api.Extension;
-import net.jplugin.core.kernel.api.ExtensionFactory;
+import net.jplugin.core.kernel.api.Beans;
 import net.jplugin.core.kernel.api.PluginEnvirement;
 import net.jplugin.ext.webasic.api.AbstractExController;
 import net.jplugin.ext.webasic.api.BindController;
@@ -148,7 +148,7 @@ public class ExtensionWebHelper {
 			.log("$$$ Auto add extension for service export : servicePath=" + anno.path() + " class="
 					+ c.getName());
 			if (StringKit.isNotNull(anno.id())) {
-				ExtensionFactory.setLastId(anno.id());
+				Beans.setLastId(anno.id());
 			}
 		}
 	}
@@ -170,7 +170,7 @@ public class ExtensionWebHelper {
 								+ c.getName());
 				
 				if (StringKit.isNotNull(anno.id())) {
-					ExtensionFactory.setLastId(anno.id());
+					Beans.setLastId(anno.id());
 				}
 			} else {
 				ExtensionWebHelper.addWebControllerExtension(p, anno.path(), c);
@@ -179,7 +179,7 @@ public class ExtensionWebHelper {
 								+ c.getName());
 				
 				if (StringKit.isNotNull(anno.id())) {
-					ExtensionFactory.setLastId(anno.id());
+					Beans.setLastId(anno.id());
 				}
 			}
 		}

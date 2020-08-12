@@ -19,7 +19,7 @@ import net.jplugin.core.ctx.impl.filter4clazz.RuleCallFilterDefineBean;
 import net.jplugin.core.ctx.kits.PropertyFilterKits;
 import net.jplugin.core.kernel.api.AbstractPlugin;
 import net.jplugin.core.kernel.api.Extension;
-import net.jplugin.core.kernel.api.ExtensionFactory;
+import net.jplugin.core.kernel.api.Beans;
 import net.jplugin.core.kernel.api.PluginEnvirement;
 
 /**
@@ -89,7 +89,7 @@ public class ExtensionCtxHelper {
 		
 
 		if (StringKit.isNotNull(anno.id())) {
-			ExtensionFactory.setLastId(anno.id());
+			Beans.setLastId(anno.id());
 		}
 	}
 	
@@ -129,7 +129,7 @@ public class ExtensionCtxHelper {
 		}
 		
 		if (StringKit.isNotNull(anno.id())) {
-			ExtensionFactory.setLastId(anno.id());
+			Beans.setLastId(anno.id());
 		}
 	}
 
