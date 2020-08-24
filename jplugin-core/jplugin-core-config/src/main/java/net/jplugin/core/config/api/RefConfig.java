@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 public @interface RefConfig {
 	String path();
 	String defaultValue() default "";
+	boolean autoRefresh() default false;
 }

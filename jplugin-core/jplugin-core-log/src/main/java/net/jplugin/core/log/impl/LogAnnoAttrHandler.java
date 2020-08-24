@@ -1,5 +1,7 @@
 package net.jplugin.core.log.impl;
 
+import java.lang.reflect.Field;
+
 import net.jplugin.core.kernel.api.IAnnoForAttrHandler;
 import net.jplugin.core.log.api.LogFactory;
 import net.jplugin.core.log.api.Logger;
@@ -15,7 +17,7 @@ public class LogAnnoAttrHandler implements IAnnoForAttrHandler<RefLogger> {
 		return Logger.class;
 	}
 
-	public Object getValue(Object theObject,Class fieldType, RefLogger anno) {
+	public Object getValue(Object theObject,Class fieldType, Field field,RefLogger anno) {
 		if ("".equals(anno.value())){
 			return LogFactory.getLogger(theObject.getClass());
 		}else{

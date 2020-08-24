@@ -4,9 +4,12 @@ import net.jplugin.core.config.api.ConfigChangeManager;
 import net.jplugin.core.config.api.ConfigFactory;
 import net.jplugin.core.config.api.IConfigChangeHandler;
 import net.jplugin.core.config.impl.AnnoForAttrHandler;
+import net.jplugin.core.config.impl.ConfigChangeHandlerDef;
 import net.jplugin.core.config.impl.ConfigRepository;
 import net.jplugin.core.config.impl.ConfigureChangeManager;
 import net.jplugin.core.config.impl.PropertyFilter;
+import net.jplugin.core.config.impl.autofresh.AutoRefreshConfigChangeHandler;
+import net.jplugin.core.config.impl.autofresh.RefConfigAutoRefresher;
 import net.jplugin.core.kernel.api.AbstractPlugin;
 import net.jplugin.core.kernel.api.CoreServicePriority;
 import net.jplugin.core.kernel.api.Extension;
@@ -37,8 +40,9 @@ public class Plugin extends AbstractPlugin{
 
 	public Plugin(){
 		//add point
-		this.addExtensionPoint(ExtensionPoint.create(EP_CONFIG_CHANGE_HANDLER, IConfigChangeHandler.class,true));
+		this.addExtensionPoint(ExtensionPoint.create(EP_CONFIG_CHANGE_HANDLER, ConfigChangeHandlerDef.class));
 		ExtensionKernelHelper.addAnnoAttrHandlerExtension(this,AnnoForAttrHandler.class );
+		ExtensionConfigHelper.addConfigChangeHandlerExtension(this, "*", AutoRefreshConfigChangeHandler.class);
 	}
 	@Override
 	public void onCreateServices() {

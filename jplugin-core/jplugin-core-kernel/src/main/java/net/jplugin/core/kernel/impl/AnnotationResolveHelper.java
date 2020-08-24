@@ -140,7 +140,7 @@ public class AnnotationResolveHelper {
 							+ h.getAttrClass() + " ," + obj.getClass().getName() + "." + field.getName());
 
 		Annotation anno = field.getAnnotation(h.getAnnoClass());
-		Object newV = h.getValue(obj, field.getType(), anno);
+		Object newV = h.getValue(obj, field.getType(),field, anno);
 		if (newV == null)
 			throw new RuntimeException("Annotated attribute value retrived null: " + h.getAnnoClass().getName() + " ,"
 					+ obj.getClass().getName() + "." + field.getName());

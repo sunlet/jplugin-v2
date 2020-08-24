@@ -1,5 +1,7 @@
 package net.jplugin.core.das.mybatis.impl;
 
+import java.lang.reflect.Field;
+
 import net.jplugin.core.das.mybatis.api.MyBatisServiceFactory;
 import net.jplugin.core.das.mybatis.api.RefMybatisService;
 import net.jplugin.core.kernel.api.IAnnoForAttrHandler;
@@ -17,7 +19,7 @@ public class MybatisServiceAnnoHandler implements IAnnoForAttrHandler<RefMybatis
 	}
 
 	@Override
-	public Object getValue(Object obj,Class fieldType, RefMybatisService anno) {
+	public Object getValue(Object obj,Class fieldType, Field f,RefMybatisService anno) {
 		return MyBatisServiceFactory.getService(anno.dataSource());
 	}
 

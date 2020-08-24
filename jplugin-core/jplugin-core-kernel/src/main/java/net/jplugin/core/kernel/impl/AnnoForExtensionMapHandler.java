@@ -1,5 +1,6 @@
 package net.jplugin.core.kernel.impl;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public class AnnoForExtensionMapHandler implements IAnnoForAttrHandler<RefExtens
 	}
 
 	@Override
-	public Object getValue(Object theObject, Class fieldType, RefExtensionMap anno) {
+	public Object getValue(Object theObject, Class fieldType, Field field,RefExtensionMap anno) {
 		String name = anno.pointTo();
 
 		Map objects = PluginEnvirement.getInstance().getExtensionMap(name);

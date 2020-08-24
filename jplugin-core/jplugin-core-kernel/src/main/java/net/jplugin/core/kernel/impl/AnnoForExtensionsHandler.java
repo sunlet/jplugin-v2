@@ -1,6 +1,7 @@
 package net.jplugin.core.kernel.impl;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class AnnoForExtensionsHandler implements IAnnoForAttrHandler<RefExtensio
 	}
 
 	@Override
-	public Object getValue(Object theObject, Class fieldType, RefExtensions anno) {
+	public Object getValue(Object theObject, Class fieldType, Field field,RefExtensions anno) {
 		String name = anno.pointTo();
 		
 

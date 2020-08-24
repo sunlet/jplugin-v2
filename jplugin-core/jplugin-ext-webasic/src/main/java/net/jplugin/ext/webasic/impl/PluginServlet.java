@@ -21,6 +21,7 @@ import net.jplugin.core.kernel.api.PluginEnvirement;
 
 public class PluginServlet extends HttpServlet{
 
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -43,9 +44,16 @@ public class PluginServlet extends HttpServlet{
 //		}
 		WebDriver.INSTANCE.dohttp(req, res);
 	}
+	
 
 	@Override
 	public void init() throws ServletException {
+		if (embedMode) {
+			PluginEnvirement.INSTANCE.getStartLogger().log("Servlet init ignored, You may start tomcat in embed tomcat state...");
+			return;
+		}
+		initcalled = true;
+			
 		PluginEnvirement.INSTANCE.getStartLogger().log("Servlet init...");
 		try{
 			//set the work directory 
@@ -75,10 +83,25 @@ public class PluginServlet extends HttpServlet{
 		}
 	}
 	
-	
+	private static boolean initcalled = false;
+	private static boolean embedMode=false;
+
+	public static void checkAndUseEmbedMode() {
+		/**
+		 * 确定是Servlet容器拉起来的,  然后设置模式为Embed模式,这样再init的时候就不会执行实质内容了! 
+		 */
+		if (initcalled) {
+			throw new RuntimeException("Jplugin is running in ServletContainer , You must remove the jplugin-embed-tomcat dependency!");
+		}else {
+			embedMode = true;
+		}
+
+	}
 
 	@Override
 	public void destroy() {
 		PluginEnvirement.getInstance().stop();
 	}
+
+	
 }

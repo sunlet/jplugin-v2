@@ -1,5 +1,7 @@
 package net.jplugin.core.kernel.api;
 
+import java.lang.reflect.Field;
+
 public interface IAnnoForAttrHandler <T> {
 	/**
 	 * 标记该Handler对应的AnnoClass
@@ -19,5 +21,5 @@ public interface IAnnoForAttrHandler <T> {
 	 * @param anno  anno对象
 	 * @return 
 	 */
-	public Object  getValue(Object theObject,Class fieldType,T anno);
+	public Object  getValue(Object theObject,Class fieldType,Field field,T anno);
 }

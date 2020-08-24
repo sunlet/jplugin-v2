@@ -1,5 +1,6 @@
 package net.jplugin.core.das.mybatis.impl;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import net.jplugin.common.kits.StringKit;
@@ -21,7 +22,7 @@ public class MybatisMapperAnnoHandler implements IAnnoForAttrHandler<RefMapper> 
 	}
 
 	@Override
-	public Object getValue(Object theObject, Class fieldType, RefMapper anno) {
+	public Object getValue(Object theObject, Class fieldType,Field f, RefMapper anno) {
 		String nm = anno.dataSource();
 		if (StringKit.isNull(nm)){
 			//如果只匹配到一个，则用这个datasource
