@@ -13,6 +13,7 @@ import net.jplugin.core.config.api.RefConfig;
 import net.jplugin.core.config.impl.autofresh.RefConfigAutoRefresher.RefreshConfig;
 import net.jplugin.core.kernel.api.PluginEnvirement;
 
+
 public class RefConfigAutoRefresher {
 	public static RefConfigAutoRefresher instance = new RefConfigAutoRefresher();
 
