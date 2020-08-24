@@ -96,7 +96,10 @@ public final class HttpKit{
 	}
 	
 	static{
-		clientBuilder = initHttpClientBuilder();
+		HashMap<String,String> configMap = new HashMap();
+		//XXXXXXX
+		//.......
+		clientBuilder = innerInitHttpClientBuilder(configMap);
 	}
 
 	public static boolean isUnitTesting(){
@@ -105,8 +108,15 @@ public final class HttpKit{
 	public static void setUnitTesting(boolean b) {
 		unitTesting = b;
 	}
+	
+	public static void _reInitHttpClientBuilder(HashMap<String,String> configCenterConfig) {
+		if (clientBuilder!=null) {
+			////
+		}
+		innerInitHttpClientBuilder(configCenterConfig);
+	}
 
-	private static HttpClientBuilder initHttpClientBuilder() {
+	private static HttpClientBuilder innerInitHttpClientBuilder(HashMap<String,String> httpKitConfig) {
 		final HttpClientBuilder builder = HttpClientBuilder.create();
 		try {
 			//请求配置
