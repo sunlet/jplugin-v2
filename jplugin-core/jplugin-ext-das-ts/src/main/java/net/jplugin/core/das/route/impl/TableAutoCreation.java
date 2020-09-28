@@ -133,10 +133,10 @@ public class TableAutoCreation {
 		}
 	}
 
-	public static boolean tableExists(String ds, String tb) {
-		String key = ds + "#" + tb;
-		return tableMapping.containsKey(key);
-	}
+//	public static boolean tableExists(String ds, String tb) {
+//		String key = ds + "#" + tb;
+//		return tableMapping.containsKey(key);
+//	}
 
 
 }
