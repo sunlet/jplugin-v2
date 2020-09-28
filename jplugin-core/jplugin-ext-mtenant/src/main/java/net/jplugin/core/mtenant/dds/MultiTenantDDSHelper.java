@@ -13,7 +13,7 @@ import net.jplugin.core.mtenant.MtenantStatus;
 
 public class MultiTenantDDSHelper extends RefAnnotationSupport{
 	
-	MultiTenantDDSHelper INSTANCE = new MultiTenantDDSHelper();
+//	MultiTenantDDSHelper INSTANCE = new MultiTenantDDSHelper();
 	private Map<String, String> datasourceMap;
 	private String dataSourceName;
 	
