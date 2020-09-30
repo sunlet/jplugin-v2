@@ -3,7 +3,9 @@ package net.jplugin.core.das.dds.api;
 import java.sql.SQLException;
 import java.util.concurrent.Callable;
 
+import net.jplugin.core.config.api.ConfigFactory;
 import net.jplugin.core.das.dds.impl.IStatementContextCallable;
+import net.jplugin.core.kernel.api.PluginEnvirement;
 import net.sf.jsqlparser.statement.Statement;
 
 /**
@@ -19,7 +21,11 @@ import net.sf.jsqlparser.statement.Statement;
 public class RouterExecutionContext {
 
 	static ThreadLocal<RouterExecutionContext> statementCacheContext=new ThreadLocal<RouterExecutionContext>();
-	static boolean CHECK=true;
+	static boolean CHECK;
+	static {
+		CHECK = "true".equalsIgnoreCase(ConfigFactory.getStringConfigWithTrim("platform.route_ctx_getstmt_with_check"));
+		PluginEnvirement.getInstance().getStartLogger().log("$$$ platform.route_ctx_getstmt_with_check ="+CHECK);
+	}
 	
 	net.sf.jsqlparser.statement.Statement statement=null;
 	
