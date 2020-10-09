@@ -22,7 +22,7 @@ public class AnnoForExtensionsHandler implements IAnnoForAttrHandler<RefExtensio
 	}
 
 	@Override
-	public Object getValue(Object theObject, Class fieldType, Field field,RefExtensions anno) {
+	public Object getValue(Object theObject, Class fieldType,RefExtensions anno) {
 		String name = anno.pointTo();
 		
 

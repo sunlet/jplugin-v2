@@ -30,5 +30,9 @@ public class AnnoForAttrHandler implements IAnnoForAttrHandler<RefConfig> {
 		return PritiveKits.getTransformer(fieldType).fromString(fieldType,val);
 	}
 
+	@Override
+	public Object getValue(Object theObject, Class fieldType, RefConfig anno) {
+		throw new RuntimeException("shoudln't called");
+	}
 
 }

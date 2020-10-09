@@ -18,7 +18,7 @@ public class AnnoForBeanHandler implements IAnnoForAttrHandler<RefBean> {
 	}
 
 	@Override
-	public Object getValue(Object theObject, Class fieldType,Field field, RefBean anno) {
+	public Object getValue(Object theObject, Class fieldType, RefBean anno) {
 		String name = anno.id();
 		Object obj = Beans.get(name);
 		if (fieldType.isAssignableFrom(obj.getClass())) {

@@ -21,5 +21,15 @@ public interface IAnnoForAttrHandler <T> {
 	 * @param anno  anno对象
 	 * @return 
 	 */
-	public Object  getValue(Object theObject,Class fieldType,Field field,T anno);
+	public Object  getValue(Object theObject,Class fieldType,T anno);
+	
+	/**
+	 * 获取值, 4 param
+	 * @param fieldType Attr的实际类型
+	 * @param anno  anno对象
+	 * @return 
+	 */
+	default Object  getValue(Object theObject,Class fieldType,Field f, T anno) {
+		return getValue(theObject,fieldType,anno);
+	}
 }

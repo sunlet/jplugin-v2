@@ -19,7 +19,7 @@ public class MybatisServiceAnnoHandler implements IAnnoForAttrHandler<RefMybatis
 	}
 
 	@Override
-	public Object getValue(Object obj,Class fieldType, Field f,RefMybatisService anno) {
+	public Object getValue(Object obj,Class fieldType, RefMybatisService anno) {
 		return MyBatisServiceFactory.getService(anno.dataSource());
 	}
 

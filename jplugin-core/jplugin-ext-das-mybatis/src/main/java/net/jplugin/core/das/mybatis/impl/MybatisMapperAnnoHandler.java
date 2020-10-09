@@ -22,7 +22,7 @@ public class MybatisMapperAnnoHandler implements IAnnoForAttrHandler<RefMapper> 
 	}
 
 	@Override
-	public Object getValue(Object theObject, Class fieldType,Field f, RefMapper anno) {
+	public Object getValue(Object theObject, Class fieldType,RefMapper anno) {
 		String nm = anno.dataSource();
 		if (StringKit.isNull(nm)){
 			//如果只匹配到一个，则用这个datasource

@@ -16,7 +16,7 @@ public class RuleServiceAttrAnnoHandler implements IAnnoForAttrHandler<RefRuleSe
 		return Object.class;
 	}
 
-	public Object getValue(Object theObject, Class fieldType, Field f,RefRuleService anno) {
+	public Object getValue(Object theObject, Class fieldType, RefRuleService anno) {
 		if (anno.name().equals(""))
 			return RuleServiceFactory.getRuleService(fieldType);
 		else

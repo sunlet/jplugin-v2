@@ -21,7 +21,7 @@ public class ServiceAttrAnnoHandler implements IAnnoForAttrHandler<RefService> {
 	/**
 	 * 先查找RuleService，再查找Service
 	 */
-	public Object getValue(Object theObject, Class fieldType,Field f, RefService anno) {
+	public Object getValue(Object theObject, Class fieldType, RefService anno) {
 		Object o=null;
 		try {
 			// 发生查找错误，不要抛出异常，后续查找

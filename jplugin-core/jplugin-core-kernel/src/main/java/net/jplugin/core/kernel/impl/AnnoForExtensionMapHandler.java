@@ -21,7 +21,7 @@ public class AnnoForExtensionMapHandler implements IAnnoForAttrHandler<RefExtens
 	}
 
 	@Override
-	public Object getValue(Object theObject, Class fieldType, Field field,RefExtensionMap anno) {
+	public Object getValue(Object theObject, Class fieldType,RefExtensionMap anno) {
 		String name = anno.pointTo();
 
 		Map objects = PluginEnvirement.getInstance().getExtensionMap(name);

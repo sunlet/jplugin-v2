@@ -17,7 +17,7 @@ public class LogAnnoAttrHandler implements IAnnoForAttrHandler<RefLogger> {
 		return Logger.class;
 	}
 
-	public Object getValue(Object theObject,Class fieldType, Field field,RefLogger anno) {
+	public Object getValue(Object theObject,Class fieldType,RefLogger anno) {
 		if ("".equals(anno.value())){
 			return LogFactory.getLogger(theObject.getClass());
 		}else{
