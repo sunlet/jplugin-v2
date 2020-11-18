@@ -109,6 +109,11 @@
 			<artifactId>jplugin-ext-webasic</artifactId>
 			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>jplugin-ext-staticweb</artifactId>
+			<version>0.0.2-SNAPSHOT</version>
+		</dependency>
 
 
 

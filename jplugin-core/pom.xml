@@ -43,5 +43,6 @@
 		<module>jplugin-ext-das-ts</module>
 		<module>jplugin-maven-package</module>
 		<!-- module>jplugin-test-main</module -->
+    	<module>jplugin-ext-staticweb</module>
   </modules>
 </project>

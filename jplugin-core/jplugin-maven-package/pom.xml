@@ -94,6 +94,12 @@
 			<artifactId>jplugin-ext-webasic</artifactId>
 			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>net.jplugin.core</groupId>
+			<artifactId>jplugin-ext-staticweb</artifactId>
+			<version>0.0.2-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -134,6 +140,7 @@
 									<!-- <include>net.jplugin.core:jplugin-ext-token</include> -->
 									<include>net.jplugin.core:jplugin-ext-webasic</include>
 									<include>net.jplugin.core:jplugin-ext-event</include>
+									<include>net.jplugin.core:jplugin-ext-staticweb</include>
 								</includes>
 							</artifactSet>
 							<filters>
