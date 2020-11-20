@@ -260,8 +260,13 @@ public final class HttpKit{
 		InvocationParam invokeParam = ClientInvocationManager.INSTANCE.getAndClearParam();
 		if (invokeParam != null) {
 			Builder configBuilder = RequestConfig.custom();
-			if (invokeParam.getServiceTimeOut() != 0) {
-				configBuilder.setSocketTimeout(invokeParam.getServiceTimeOut());
+			
+			//三个超时时间设置相同的值
+			int soTimeout = invokeParam.getServiceTimeOut();
+			if (soTimeout != 0) {
+				configBuilder.setSocketTimeout(soTimeout);
+				configBuilder.setConnectionRequestTimeout(soTimeout);
+				configBuilder.setConnectTimeout(soTimeout);
 			}
 			httpReqBase.setConfig(configBuilder.build());
 		}
