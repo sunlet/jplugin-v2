@@ -89,11 +89,17 @@ public class RestMethodControllerSet4Invoker implements IControllerSet{
 		}
 
 		ServiceInvokerSet.instance.call(callParam);
-		String result = callParam.getResult();
 		
-		res.setCharacterEncoding("utf-8");
-		res.setContentType("text/json");
-		res.getWriter().print(result);
-		//controllerMap.get(path).dohttp(req, res,innerPath);
+		//2020-12 为了支持生成代码，增加判断
+		Boolean flag = (Boolean) ThreadLocalContextManager.getCurrentContext().getAttribute(net.jplugin.ext.webasic.impl.restm.Constants.NOT_WRITE_RESULT);
+		if (flag==null || flag) {
+			String result = callParam.getResult();
+			
+			res.setCharacterEncoding("utf-8");
+			res.setContentType("text/json");
+			res.getWriter().print(result);
+			//controllerMap.get(path).dohttp(req, res,innerPath);
+		}
+
 	}
 }
