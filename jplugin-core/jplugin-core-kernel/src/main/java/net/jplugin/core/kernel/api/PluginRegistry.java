@@ -12,6 +12,7 @@ import java.util.Vector;
 import net.jplugin.common.kits.Comparor;
 import net.jplugin.common.kits.SortUtil;
 import net.jplugin.common.kits.StringKit;
+import net.jplugin.core.kernel.api.plugin_event.PluginEventListenerManager;
 
 /**
  *
@@ -153,6 +154,8 @@ public class PluginRegistry {
 			AbstractPlugin plugin = (AbstractPlugin) pluginList.get(i);
 			if (plugin.getStatus() == IPlugin.STAT_LOADED){
 				plugin.onCreateServices();
+				//触发Plugin事件
+				PluginEventListenerManager.afterCreateServices(plugin.getName());
 			}
 		}
 	}
