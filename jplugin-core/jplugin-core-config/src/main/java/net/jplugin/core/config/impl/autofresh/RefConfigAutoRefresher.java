@@ -35,7 +35,7 @@ public class RefConfigAutoRefresher {
 		if (list==null) {
 			//create list
 			list = new ArrayList(2);
-			refreshMap.put(path, list);	
+			refreshMap.put(getGroupName(path), list);	
 		}else {
 			//check list
 			check(list,f,theObject,anno);
@@ -46,6 +46,15 @@ public class RefConfigAutoRefresher {
 		list.add(raf);
 	}
 	
+	private String getGroupName(String path) {
+		int pos = path.indexOf(".");
+		if (pos<0) {
+			return path;
+		}else {
+			return path.substring(0,pos);
+		}
+	}
+
 	//一个路径下面，一个属性只能有一个配置
 	private  void check(List<RefreshConfig> list,Field f, Object theObject, RefConfig anno) {
 		for (RefreshConfig o:list) {
@@ -70,6 +79,7 @@ public class RefConfigAutoRefresher {
 
 	public synchronized  void keysChanged(List<String> keys) {
 		for (String key:keys) {
+			//因为目前变更传入的是组的名字，不包含具体的key。所以用path
 			if (refreshMap.containsKey(key)) {
 				refresh(refreshMap.get(key));
 			}
