@@ -29,13 +29,14 @@ public class RefConfigAutoRefresher {
 		}
 		
 		String path = anno.path();
+		String groupName = getGroupName(path);
 		
 		//GET LIST
-		List<RefreshConfig> list = refreshMap.get(path);
+		List<RefreshConfig> list = refreshMap.get(groupName);
 		if (list==null) {
 			//create list
 			list = new ArrayList(2);
-			refreshMap.put(getGroupName(path), list);	
+			refreshMap.put(groupName, list);	
 		}else {
 			//check list
 			check(list,f,theObject,anno);
