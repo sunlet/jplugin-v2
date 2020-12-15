@@ -1,8 +1,13 @@
 package net.jplugin.core.kernel.api;
 
+import net.jplugin.common.kits.StringKit;
 import net.jplugin.core.kernel.Plugin;
 
 public class ExtensionKernelHelper {
+	public static void addBeanExtension(AbstractPlugin p,String id,Class beanClazz){
+		p.addExtension(Extension.create(net.jplugin.core.kernel.Plugin.EP_BEAN,id,beanClazz));
+		Beans.setLastId(id);
+	}
 	public static void addStartUpExtension(AbstractPlugin p,Class startupClazz){
 		p.addExtension(Extension.create(net.jplugin.core.kernel.Plugin.EP_STARTUP,"",startupClazz));
 	}
@@ -33,6 +38,10 @@ public class ExtensionKernelHelper {
 			BindExtension anno = (BindExtension) c.getAnnotation(BindExtension.class);
 			p.addExtension(Extension.create(anno.pointTo(),anno.name(), c));
 			PluginEnvirement.INSTANCE.getStartLogger().log("$$$ Auto add extension for point:"+anno.pointTo()+" class="+c.getName()+" name="+anno.name());
+			
+			if (StringKit.isNotNull(anno.id())) {
+				Beans.setLastId(anno.id());
+			}
 		}
 	}
 }

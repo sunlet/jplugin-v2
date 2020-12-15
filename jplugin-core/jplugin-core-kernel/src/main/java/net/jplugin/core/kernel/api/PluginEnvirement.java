@@ -27,6 +27,7 @@ public class PluginEnvirement {
 	public static final int STAT_LEVEL_PREPAREING=0;
 	public static final int STAT_LEVEL_LOADING=10;
 	public static final int STAT_LEVEL_WIRING=20;
+	public static final int STAT_LEVEL_MAKINGSVC=25;
 	public static final int STAT_LEVEL_INITING=30;
 	public static final int STAT_LEVEL_WORKING=40;
 	
@@ -243,17 +244,21 @@ public class PluginEnvirement {
 			registry.valid();
 			this.stateLevel = STAT_LEVEL_LOADING;
 			registry.load();
+			Beans.initFromPluginList();//所有Extension加入ExtensionFactory
+			
 			this.stateLevel = STAT_LEVEL_WIRING;
 			registry.wire();
+			
+			this.stateLevel = STAT_LEVEL_MAKINGSVC;
 			registry.makeServices();
 			registry.clearClassCache();
+			
 			this.stateLevel = STAT_LEVEL_INITING;
-
 
 			if (registry.getErrors() == null || registry.getErrors().isEmpty()){
 				try{
 					ThreadLocalContext ctx = ThreadLocalContextManager.instance.createContext();
-					
+
 					this.annoResolveHelper.resolveHistory();
 					startFilterManager.filter(Tuple2.with(testAll,testTarget));
 

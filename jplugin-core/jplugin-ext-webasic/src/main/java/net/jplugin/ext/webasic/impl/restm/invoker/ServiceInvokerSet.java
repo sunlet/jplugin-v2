@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.jplugin.core.kernel.api.Beans;
 import net.jplugin.core.kernel.api.PluginEnvirement;
 import net.jplugin.ext.webasic.api.IController;
 import net.jplugin.ext.webasic.api.IControllerSet;
@@ -50,7 +51,11 @@ public class ServiceInvokerSet implements IServiceInvokerSet{
 			if (serviceMap.get(en.getKey())!=null)
 				throw new RuntimeException("duplicate service path:"+en.getKey());
 			
-			serviceMap.put(en.getKey(), new ServiceInvoker(en.getValue()));
+			IServiceInvoker invoker = new ServiceInvoker(en.getValue());
+			serviceMap.put(en.getKey(), invoker);
+			
+			//重新设置value值
+			Beans.resetValue(en.getValue(), invoker.getObjectCallHelper().getObject());
 		}
 	}
 	

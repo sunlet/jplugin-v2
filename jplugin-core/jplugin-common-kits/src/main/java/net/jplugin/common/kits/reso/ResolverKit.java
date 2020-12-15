@@ -54,6 +54,10 @@ public class ResolverKit<T> {
      */
     boolean matches(Class<?> type);
   }
+  //add by liuhang
+  public static interface NameTest{
+	  boolean matchsName(String nm);
+  }
 
   /**
    * A Test that checks to see if each class is assignable to the provided class. Note
@@ -205,6 +209,23 @@ public class ResolverKit<T> {
 
     return this;
   }
+  //add by liuhang
+  public ResolverKit<T> find(Test test,NameTest nt, String packageName) {
+	    String path = getPackagePath(packageName);
+
+	    try {
+	      List<String> children = VFS.getInstance().list(path,nt);
+	      for (String child : children) {
+	        if (child.endsWith(".class"))
+	          addIfMatching(test, child);
+	      }
+	    } catch (IOException ioe) {
+	      log.error("Could not read package: " + packageName, ioe);
+	    }
+
+	    return this;
+	  }
+
 
   /**
    * Scans for classes starting at the package provided and descending into subpackages.

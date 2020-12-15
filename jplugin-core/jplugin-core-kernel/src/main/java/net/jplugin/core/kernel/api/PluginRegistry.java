@@ -126,6 +126,7 @@ public class PluginRegistry {
 			AbstractPlugin plugin = pluginList.get(i);
 			this.loadedPluginMap.put(plugin.getName(),plugin);
 		}
+
 	}
 	
 	

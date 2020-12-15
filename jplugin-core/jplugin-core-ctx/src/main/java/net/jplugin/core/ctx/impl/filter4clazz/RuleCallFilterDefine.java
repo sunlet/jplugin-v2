@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.jplugin.common.kits.StringKit;
 import net.jplugin.common.kits.StringMatcher;
+import net.jplugin.core.ctx.api.AbstractRuleMethodInterceptor;
 
 public class RuleCallFilterDefine {
 
@@ -14,6 +15,7 @@ public class RuleCallFilterDefine {
 	// 下面两个属性不需要在构造函数维护，外面的管理类会赋值
 	private int priority;
 	private Class filterClazz;
+	private AbstractRuleMethodInterceptor filterInstance;
 
 	public String toString(){
 		StringBuffer sb = new StringBuffer("{");
@@ -101,6 +103,13 @@ public class RuleCallFilterDefine {
 
 	public void setFilterClazz(Class filterClazz) {
 		this.filterClazz = filterClazz;
+	}
+
+	public void setFilterInstance(AbstractRuleMethodInterceptor instance) {
+		this.filterInstance = instance;
+	}
+	public AbstractRuleMethodInterceptor getFilterInstance() {
+		return filterInstance;
 	}
 
 }

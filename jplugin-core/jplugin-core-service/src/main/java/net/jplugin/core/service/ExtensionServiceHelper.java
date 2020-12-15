@@ -5,6 +5,7 @@ import java.lang.annotation.Annotation;
 import net.jplugin.common.kits.StringKit;
 import net.jplugin.core.kernel.api.AbstractPlugin;
 import net.jplugin.core.kernel.api.Extension;
+import net.jplugin.core.kernel.api.Beans;
 import net.jplugin.core.kernel.api.PluginEnvirement;
 import net.jplugin.core.service.api.BindService;
 import net.jplugin.core.service.api.BindServiceSet;
@@ -54,6 +55,9 @@ public class ExtensionServiceHelper {
 			addServiceExtension(p, anno.name(),c);
 			PluginEnvirement.INSTANCE.getStartLogger().log("$$$ Auto add extension for service: interface="
 					+ interfaceClazz.getName() + " impl=" + c.getName());
+		}
+		if (StringKit.isNotNull(anno.id())) {
+			Beans.setLastId(anno.id());
 		}
 	}
 	

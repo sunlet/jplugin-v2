@@ -148,44 +148,39 @@ public class RuleCallFilterManagerRuleFilter implements IRuleServiceFilter{
 		}
 		return fm;
 	}
-
-	HashMap<Class,AbstractRuleMethodInterceptor> inceptInstanceMap=new HashMap<>();
 	
-	/**
-	 * 只在对应的Rule类第一次调用的时候创建，除了第一次初始化inceptor其他都很快，所以sync没大关系。
-	 * @param filterDefine
-	 * @return
-	 */
 	
 	private synchronized ClassOwnedFilter createClassOwnedFilter(RuleCallFilterDefine filterDefine) {
-//		ClassOwnedFilter filter = 
-		
-		Class<AbstractRuleMethodInterceptor> filterClazz = filterDefine.getFilterClazz();
-		
-		//从缓存获取，获取不到时重新创建一个，保证一个inceptor只有一个实例！
-		AbstractRuleMethodInterceptor inteceptor = inceptInstanceMap.get(filterClazz);
-		if (inteceptor == null){
-			try{
-				inteceptor = filterClazz.newInstance();
-				PluginEnvirement.INSTANCE.resolveRefAnnotation(inteceptor);
-				inceptInstanceMap.put(filterClazz, inteceptor);
-			}catch(Exception e){
-				throw new RuntimeException("can't init object :"+filterClazz.getName(),e);
-			}
-		}
-		return new ClassOwnedFilter(filterDefine,inteceptor);
-		
-//		Class<AbstractRuleMethodInterceptor> f = rcfd.getFilterClazz();
-//		AbstractRuleMethodInterceptor filter;
-//		try {
-//			filter = f.newInstance();
-//			PluginEnvirement.INSTANCE.resolveRefAnnotation(filter);
-//		} catch (Exception e) {
-//			throw new RuntimeException("can't init object :"+f.getName());
-//		}
-//		filter.setFilterDefine(rcfd);
-
+		return new ClassOwnedFilter(filterDefine,filterDefine.getFilterInstance());
 	}
+
+
+//	HashMap<Class,AbstractRuleMethodInterceptor> inceptInstanceMap=new HashMap<>();
+//	
+//	/**
+//	 * 只在对应的Rule类第一次调用的时候创建，除了第一次初始化inceptor其他都很快，所以sync没大关系。
+//	 * @param filterDefine
+//	 * @return
+//	 */
+//	
+//	private synchronized ClassOwnedFilter createClassOwnedFilterOld(RuleCallFilterDefine filterDefine) {
+////		ClassOwnedFilter filter = 
+//		
+//		Class<AbstractRuleMethodInterceptor> filterClazz = filterDefine.getFilterClazz();
+//		
+//		//从缓存获取，获取不到时重新创建一个，保证一个inceptor只有一个实例！
+//		AbstractRuleMethodInterceptor inteceptor = inceptInstanceMap.get(filterClazz);
+//		if (inteceptor == null){
+//			try{
+//				inteceptor = filterClazz.newInstance();
+//				PluginEnvirement.INSTANCE.resolveRefAnnotation(inteceptor);
+//				inceptInstanceMap.put(filterClazz, inteceptor);
+//			}catch(Exception e){
+//				throw new RuntimeException("can't init object :"+filterClazz.getName(),e);
+//			}
+//		}
+//		return new ClassOwnedFilter(filterDefine,inteceptor);
+//	}
 	
 	
 	static class ClassOwnedFilter implements IFilter<RuleServiceFilterContext>{

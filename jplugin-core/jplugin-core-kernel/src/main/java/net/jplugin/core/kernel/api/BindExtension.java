@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 public @interface BindExtension {
 	public String pointTo();
 	public String name() default "";
+	public String id() default "";
 }

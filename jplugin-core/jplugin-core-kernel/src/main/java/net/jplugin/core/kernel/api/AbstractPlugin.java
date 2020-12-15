@@ -86,6 +86,7 @@ public abstract class AbstractPlugin implements IPlugin {
 
 	public void addExtension(Extension e) {
 		this.extensions.add(e);
+		Beans.setLastExtension(e);
 	}
 
 	public void addConfigure(String name,String val){
@@ -249,18 +250,47 @@ public abstract class AbstractPlugin implements IPlugin {
 	 * @return
 	 */
 	public Set<Class> getContainedClasses(){
-		
 		if (PluginEnvirement.INSTANCE.getStateLevel()>PluginEnvirement.STAT_LEVEL_INITING)
 			throw new RuntimeException("Can't call in working state");
 		
 		if (this.containedClasses==null){
+			//
+			List<String> excludePackages = getExcludePackages();
+			
 			ResolverKit kit = new ResolverKit();
-			kit.find(this.getClass().getPackage().getName(), (c)->true);
+			if (excludePackages.isEmpty()) {
+				kit.find((c)->true,this.getClass().getPackage().getName());
+			}else {
+				kit.find((c)->true, (name)->{
+					//对PackageName做一下过滤
+					for (String exclude:excludePackages) {
+						if (name.length()!=exclude.length() && name.startsWith(exclude))
+							return false;
+					}
+					return true;
+				},this.getClass().getPackage().getName());
+			}
+			
 			this.containedClasses = kit.getClasses();
 		}
 		return this.containedClasses;
 	}
 	
+	private List<String> getExcludePackages() {
+		List<String> result = new ArrayList(2);
+		String myPkg = this.getClass().getPackage().getName();
+		List<AbstractPlugin> list = PluginEnvirement.getInstance().getPluginRegistry().getPluginList();
+		for (AbstractPlugin p:list) {
+			String pkgname = p.getClass().getPackage().getName();
+			if (pkgname.equals(myPkg)) {
+				throw new RuntimeException("Duplicate plugin found  in one single package. "+this.getClass().getName()+" | "+ p.getClass().getName());
+			}else if (pkgname.startsWith(myPkg)){
+				result.add(StringKit.replaceStr(pkgname , ".","/"));
+			}
+		}
+		return result;
+	}
+
 	public Set<Class> filterContainedClassesByChecker(String pkgPath, IClassChecker checker) {
 		AssertKit.assertTrue(StringKit.isNull(pkgPath) || pkgPath.startsWith("."));
 		

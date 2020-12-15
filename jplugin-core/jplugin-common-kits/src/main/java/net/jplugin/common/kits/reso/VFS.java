@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import net.jplugin.common.kits.reso.ResolverKit.NameTest;
+
 /**
  * Provides a very simple API for accessing resources within an application server.
  * 
@@ -174,5 +176,24 @@ public abstract class VFS {
       names.addAll(list(url, path));
     }
     return names;
+  }
+  
+  //add by liuhang
+  public List<String> list(String path,NameTest nt) throws IOException {
+	    List<String> names = new ArrayList<String>();
+	    for (URL url : getResources(path)) {
+	      List<String> results = list(url, path);
+	      
+	      if (nt==null) {
+	    	  names.addAll(results);
+	      }else {
+	    	  for (String nm:results) {
+	    		  if (nt.matchsName(nm)) {
+	    			  names.add(nm);
+	    		  }
+	    	  }
+	      }
+	    }
+	    return names;
   }
 }
