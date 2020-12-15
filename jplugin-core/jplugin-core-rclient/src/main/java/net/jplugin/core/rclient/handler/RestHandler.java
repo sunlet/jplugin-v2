@@ -34,11 +34,11 @@ public class RestHandler implements IClientHandler{
 	
 public static final String MIX_PARA = "_MIX_PARA_";
 public static final Object MIX_PARA_VALUE = "1";
+	
 
-			//	public <T> T createProxyObject(final Client<T> c) {
-//		
-//		return (T)Proxy.newProxyInstance(c.getInterfaceClazz().getClassLoader(), new Class[]{c.getInterfaceClazz()}, new InvocationHandler() {
-//			
+
+
+
 			public Object invoke(Client c,Object proxy, Method method, Object[] args)
 					throws Throwable {
 				if (c.getServiceBaseUrl()==null){
