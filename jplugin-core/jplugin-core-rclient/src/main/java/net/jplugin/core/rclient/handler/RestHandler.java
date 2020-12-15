@@ -62,24 +62,28 @@ public static final Object MIX_PARA_VALUE = "1";
 					}
 				}
 				
+				//2020/12/15 开始放到Header里面
+				Map<String,String > headerMap = null;
 				if (clientInfo!=null){
+					headerMap = new HashMap<String, String>();
+					
 					if (StringKit.isNotNull(clientInfo.getAppId()))
-						map.put(Client.CLIENT_APPID, clientInfo.getAppId());
+						headerMap.put(Client.CLIENT_HAID, clientInfo.getAppId());
 					String token = TokenFactory.getAppToken();
 					if (StringKit.isNotNull(token))
-						map.put(Client.CLIENT_TOKEN, token);
+						headerMap.put(Client.CLIENT_HATK, token);
 //					map.put(Client.CLIENT_APPID, clientInfo.getAppId());
 //					map.put(Client.CLIENT_TOKEN, clientInfo.getAppToken());
 					Map<String, String> extPara = clientInfo.getExtParas();
 					if (extPara!=null){
 						for (Entry<String, String> en:extPara.entrySet()){
-							map.put(en.getKey(), en.getValue());
+							headerMap.put(en.getKey(), en.getValue());
 						}
 					}
 				}
 				String ret ;
 				String realUrl = ServiceUrlResolverManager.instance.resolveUrl(c.getProtocal(), c.getServiceBaseUrl());
-				ret = httpKitPost(realUrl+"/"+method.getName()+".do", map);
+				ret = httpKitPost(realUrl+"/"+method.getName()+".do", map,headerMap);
 
 				if (StringKit.isNull(ret)){
 					throw new RuntimeException("Server return null,perhaps can't find the controller or method not found");
@@ -98,9 +102,9 @@ public static final Object MIX_PARA_VALUE = "1";
 				}
 			}
 
-			private String httpKitPost(String url, HashMap<String, Object> map) throws IOException, HttpStatusException {
+			private String httpKitPost(String url, HashMap<String, Object> map, Map<String, String> headerMap) throws IOException, HttpStatusException {
 				try{
-					return HttpKit.post(url, map);
+					return HttpKit.postWithHeader(url, map,headerMap);
 				}catch(org.apache.http.conn.HttpHostConnectException e){
 					ClientFailHandlerManager.connectFailed(Client.PROTOCOL_REST, url);
 					throw e;
