@@ -24,6 +24,7 @@
 	</dependencies>
 
 
+
 	<modules>
 		<module>jplugin-common-kits</module>
 		<module>jplugin-common-kits-http</module>
