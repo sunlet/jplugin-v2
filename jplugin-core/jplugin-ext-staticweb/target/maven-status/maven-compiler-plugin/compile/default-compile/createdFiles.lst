@@ -1,0 +1,6 @@
+net\jplugin\ext\staticweb\Plugin.class
+net\jplugin\ext\staticweb\api\IContentManager$Response.class
+net\jplugin\ext\staticweb\impl\ConentManagerImpl.class
+net\jplugin\ext\staticweb\impl\ContentTypeMaps.class
+net\jplugin\ext\staticweb\api\IContentManager.class
+net\jplugin\ext\staticweb\api\IContentManager$Request.class
