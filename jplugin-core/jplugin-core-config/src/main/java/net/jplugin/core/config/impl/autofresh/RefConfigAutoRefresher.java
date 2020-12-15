@@ -31,6 +31,7 @@ public class RefConfigAutoRefresher {
 		String path = anno.path();
 		String groupName = getGroupName(path);
 		
+		
 		//GET LIST
 		List<RefreshConfig> list = refreshMap.get(groupName);
 		if (list==null) {
