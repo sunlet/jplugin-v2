@@ -95,26 +95,34 @@ public class ExtensionPoint {
 	 * @param t
 	 * @return
 	 */
-	public synchronized <T> T[] getExtensionObjects(Class <T> t){
+	public <T> T[] getExtensionObjects(Class <T> t){
 		if (this.extensionObjects==null){
-			this.extensionObjects = (Object[]) Array.newInstance(extensionClass, this.extensions.size());
-			for (int i=0;i<this.extensionObjects.length;i++){
-				this.extensionObjects[i] = this.extensions.get(i).getObject();
+			synchronized (this) {
+				if (this.extensionObjects==null){
+					this.extensionObjects = (Object[]) Array.newInstance(extensionClass, this.extensions.size());
+					for (int i=0;i<this.extensionObjects.length;i++){
+						this.extensionObjects[i] = this.extensions.get(i).getObject();
+					}		
+				}
 			}
 		}
 		return (T[]) this.extensionObjects;
 	}
 	
-	public synchronized  Map<String,Object> getExtensionMap(){
+	public Map<String,Object> getExtensionMap(){
 		if (!this.extensionNameReqiredAndUnique){
 			throw new RuntimeException("can't call getExtensionMap when extensionNameReqiredAndUnique is false");
 		}
 		
 		if (this.extensionMap==null){
-			this.extensionMap = new HashMap<String, Object>();
-		
-			for (Extension e:this.extensions){
-				this.extensionMap.put(e.getName(), e.getObject());
+			synchronized (this) {
+				if (this.extensionMap==null){
+					this.extensionMap = new HashMap<String, Object>();
+					
+					for (Extension e:this.extensions){
+						this.extensionMap.put(e.getName(), e.getObject());
+					}	
+				}
 			}
 		}
 		return this.extensionMap;
