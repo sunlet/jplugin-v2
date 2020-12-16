@@ -22,12 +22,25 @@ public class ExtensionPoint {
 	Object[] extensionObjects;
 	Map<String,Object> extensionMap;
 	
+	/**
+	 * 创建一个扩展点
+	 * @param aName
+	 * @param clazz
+	 * @return
+	 */
 	public static ExtensionPoint create(String aName,Class<?> clazz){
 		return create(aName, clazz,false);
 	}
 	
-	public static ExtensionPoint create(String aName,Class<?> clazz,boolean aNameRaU){
-		return new ExtensionPoint(aName,clazz,aNameRaU);
+	/**
+	 * 创建一个扩展点，nameUnique表示是否需要每一个扩展都有一个唯一的名字(name)。
+	 * @param aName
+	 * @param clazz
+	 * @param nameUnique
+	 * @return
+	 */
+	public static ExtensionPoint create(String aName,Class<?> clazz,boolean nameUnique){
+		return new ExtensionPoint(aName,clazz,nameUnique);
 	}
 
 
