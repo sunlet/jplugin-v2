@@ -25,7 +25,7 @@ public class ExtensionPointHelper {
 	 * @param t 
 	 * @return
 	 */
-	public <T> Map<String,T> getExtensionMap(String pointName,Class<T> t){
+	public static <T> Map<String,T> getExtensionMap(String pointName,Class<T> t){
 		return PluginEnvirement.getInstance().getExtensionMap(pointName,t);
 	}
 	/**
@@ -33,7 +33,7 @@ public class ExtensionPointHelper {
 	 * @param pointName
 	 * @return
 	 */
-	public Object[] getExtensionObjects(String pointName) {
+	public static Object[] getExtensionObjects(String pointName) {
 		return PluginEnvirement.getInstance().getExtensionObjects(pointName);
 	}
 	
@@ -44,7 +44,7 @@ public class ExtensionPointHelper {
 	 * @param t
 	 * @return
 	 */
-	public <T> T[] getExtensionObjects(String pointName, Class<T> t) {
+	public static <T> T[] getExtensionObjects(String pointName, Class<T> t) {
 		return PluginEnvirement.getInstance().getExtensionObjects(pointName,t);
 	}
 }
