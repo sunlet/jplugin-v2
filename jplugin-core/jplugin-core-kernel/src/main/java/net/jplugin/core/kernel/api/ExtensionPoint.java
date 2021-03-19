@@ -15,21 +15,56 @@ import net.jplugin.common.kits.StringKit;
  **/
 
 public class ExtensionPoint {
+	/**
+	 * <PRE>
+	 * 扩展点类型，分为NAMED,LIST,SINGLETON
+	 * NAMED: 每一个扩展都有一个唯一的名字，保存在extensionMap里面。
+	 * LISTED:扩展没有名字，或者可以重名，保存在extensionObjects里面。
+	 * SINGLETON:最多只能有一个扩展,保存在extensionObjects里面。
+	 *</PRE>
+	 */
+	public enum Type {NAMED,LISTED,SINGLETON}
+	
 	String name;
 	Class<?> extensionClass;
-	boolean extensionNameReqiredAndUnique;
+	Type type;
 	List<Extension> extensions;
 	Object[] extensionObjects;
 	Map<String,Object> extensionMap;
 	
+	
 	/**
-	 * 创建一个扩展点
+	 * 创建一个扩展点, 扩展为多个不限定名称的实例
 	 * @param aName
 	 * @param clazz
 	 * @return
 	 */
+	public static ExtensionPoint createListed(String aName,Class<?> clazz){
+		return new ExtensionPoint(aName,clazz,Type.LISTED);
+	}
+	/**
+	 * 创建一个扩展点, 扩展为唯一名称的多个实例
+	 * @param aName
+	 * @param clazz
+	 * @return
+	 */
+	public static ExtensionPoint createNamed(String aName,Class<?> clazz){
+		return new ExtensionPoint(aName,clazz,Type.NAMED);
+	}
+	/**
+	 * 创建一个单例扩展点，只能有一个扩展实例，如果注册了多个，系统自动检查
+	 * @param aName
+	 * @param clazz
+	 * @return
+	 */
+	public static ExtensionPoint createSingleton(String aName,Class<?> clazz){
+		return new ExtensionPoint(aName,clazz,Type.SINGLETON);
+	}
+	
+	
+	@Deprecated
 	public static ExtensionPoint create(String aName,Class<?> clazz){
-		return create(aName, clazz,false);
+		return createListed(aName,clazz);
 	}
 	
 	/**
@@ -39,17 +74,20 @@ public class ExtensionPoint {
 	 * @param nameUnique
 	 * @return
 	 */
+	@Deprecated
 	public static ExtensionPoint create(String aName,Class<?> clazz,boolean nameUnique){
-		return new ExtensionPoint(aName,clazz,nameUnique);
+		if (nameUnique) {
+			return createNamed(aName,clazz);
+		}else {
+			return createListed(aName,clazz);
+		}
 	}
-
-
 	
-	private ExtensionPoint(String aName,Class<?> clazz,boolean aNameRaU){
+	private ExtensionPoint(String aName,Class<?> clazz,Type tp){
 		this.name = aName;
 		this.extensionClass = clazz;
 		this.extensions = new ArrayList<Extension>();
-		this.extensionNameReqiredAndUnique = aNameRaU;
+		this.type = tp;
 	}
 	
 	
@@ -73,7 +111,7 @@ public class ExtensionPoint {
 	 * @return
 	 */
 	public boolean extensionNameReqiredAndUnique(){
-		return this.extensionNameReqiredAndUnique;
+		return this.type==Type.NAMED;
 	}
 
 	/**
@@ -90,18 +128,43 @@ public class ExtensionPoint {
 	public void addExtension(Extension e) {
 		this.extensions.add(e);
 	}
-	public void findExtensionObjectByName(String nm){
-		Object find = null;
-		for (Extension e:this.extensions){
-			if (nm.equals(e.getName())){
-				if (find == null){
-					find = e.getObject();
-				}else{
-					throw new RuntimeException("find duplicate object with name:"+nm);
-				}
-			}
+	
+//	void findExtensionObjectByName(String nm){
+//		Object find = null;
+//		for (Extension e:this.extensions){
+//			if (nm.equals(e.getName())){
+//				if (find == null){
+//					find = e.getObject();
+//				}else{
+//					throw new RuntimeException("find duplicate object with name:"+nm);
+//				}
+//			}
+//		}
+//	}
+	
+	/**
+	 * 获取单个Extension，类型必须是 SINGLETON
+	 * @param <T>
+	 * @param t
+	 * @return
+	 */
+	public <T> T getExtension(Class<T> t) {
+		if (! (this.type==Type.SINGLETON)){
+			throw new RuntimeException("can't call getExtension when type is not SINGLETON");
+		}
+		
+		if (this.extensionObjects==null){
+			//初始化一下
+			getExtensionObjects(t);
+		}
+		
+		if (this.extensionObjects==null || this.extensionObjects.length==0) {
+			return null;
+		}else {
+			return (T) this.extensionObjects[0];
 		}
 	}
+	
 	/**
 	 * 运行阶段
 	 * @param <T>
@@ -123,7 +186,7 @@ public class ExtensionPoint {
 	}
 	
 	public Map<String,Object> getExtensionMap(){
-		if (!this.extensionNameReqiredAndUnique){
+		if (! (this.type==Type.NAMED)){
 			throw new RuntimeException("can't call getExtensionMap when extensionNameReqiredAndUnique is false");
 		}
 		
@@ -145,21 +208,22 @@ public class ExtensionPoint {
 	 * @param name2
 	 * @return
 	 */
-	public boolean validExtensionName(String nm) {
-		if (!this.extensionNameReqiredAndUnique){
-			return true;
-		}
-		if (StringKit.isNull(nm)){
-			return false;
-		}
-		
-		for (Extension e:this.extensions){
-			if (nm.equals(e.getName())){
+	boolean validToAddExtensionByName(String nm) {
+		if (this.type==Type.NAMED){
+			if (StringKit.isNull(nm)){
 				return false;
 			}
-		}
-		
-		return true;
+			
+			for (Extension e:this.extensions){
+				if (nm.equals(e.getName())){
+					return false;
+				}
+			}
+			return true;
+		}else if (this.type == Type.SINGLETON) {
+			return this.extensions.size()==0;
+		}else
+			return true;
 		
 	}
 

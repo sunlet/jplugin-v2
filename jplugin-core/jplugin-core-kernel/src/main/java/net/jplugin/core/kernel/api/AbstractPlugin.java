@@ -177,7 +177,7 @@ public abstract class AbstractPlugin implements IPlugin {
 //				throw new RuntimeException("Shoudn't be null ,because have valided! "+pname);
 				errorList.add(new PluginError(this.getName(),"Couldn't find extension point for extension ,perhaps the extensionpoint plugin is not load correctly.extension= "+e.getName() +" pointname="+pname));
 			}else{
-				if (point.validExtensionName(e.getName())){
+				if (point.validToAddExtensionByName(e.getName())){
 					point.addExtension(e);
 				}else{
 					errorList.add(new PluginError(this.getName(),"The extension name must be unique and notnull. extension= "+e.getName() +" pointname="+pname));

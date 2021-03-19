@@ -121,6 +121,17 @@ public class PluginEnvirement {
 
 		return point.getExtensionMap();
 	}
+	
+	public <T> T getExtension(String pointName,Class<T> t){
+		ExtensionPoint point = this.registry.getExtensionPointMap().get(
+				pointName);
+		if (point == null)
+			throw new PluginRuntimeException("Can't find the extension point:"
+					+ pointName);
+
+		return point.getExtension(t);
+	}
+
 
 	
 	public <T> T[] getExtensionObjects(String pointName, Class<T> t) {

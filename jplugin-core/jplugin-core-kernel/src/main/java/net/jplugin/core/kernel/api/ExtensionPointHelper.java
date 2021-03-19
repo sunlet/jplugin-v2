@@ -47,4 +47,15 @@ public class ExtensionPointHelper {
 	public static <T> T[] getExtensionObjects(String pointName, Class<T> t) {
 		return PluginEnvirement.getInstance().getExtensionObjects(pointName,t);
 	}
+	
+	/**
+	 * 获取单个Extension,扩展点的类型需要是Singleton类型
+	 * @param <T>
+	 * @param pointName
+	 * @param t
+	 * @return
+	 */
+	public static <T> T getExtension(String pointName,Class<T> t) {
+		return PluginEnvirement.getInstance().getExtension(pointName,t);
+	}
 }
