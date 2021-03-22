@@ -5,7 +5,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>net.jplugin.mvn</groupId>
+	<groupId>net.jplugin</groupId>
 	<artifactId>jplugin-core</artifactId>
 	<version>2.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -205,8 +205,7 @@
 				</executions>
 			</plugin>
 			
-			<!-- 往Maven中央仓库发布需要的插件-->
-			<!-- 
+			<!-- 往Maven中央仓库发布需要的插件 -->
 			<plugin>
         		<groupId>org.apache.maven.plugins</groupId>
         		<artifactId>maven-gpg-plugin</artifactId>
@@ -229,16 +228,16 @@
         		<configuration>
           			<serverId>ossrh</serverId>
           			<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          			<!-- Set this to true and the release will automatically proceed and sync to Central Repository will follow  -->
           			<autoReleaseAfterClose>false</autoReleaseAfterClose>
         		</configuration>
       		</plugin> 
-      		  -->
 			<!--上面两个用来往maven中央仓库发布需要-->
+			
 		</plugins>
 	</build>
 
 	<!-- 下面两个用来往maven中央仓库发布需要 -->
-	<!-- 
 	<distributionManagement>
         <repository>
             <id>repository</id>
@@ -249,10 +248,9 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-     -->
     <!--上面两个用来往maven中央仓库发布需要-->
     
-	<!-- 公司的私服--> 
+	<!-- 公司的私服 
 	<distributionManagement>
 		<snapshotRepository>
 			<id>snapshots</id>
@@ -265,5 +263,5 @@
 			<url>http://maven.haiziwang.com:8081/nexus/content/repositories/releases/</url>
 		</repository>
 	</distributionManagement>
-	 <!-- -->
+	 -->
 </project>
