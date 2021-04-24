@@ -341,7 +341,7 @@ public final class HttpKit {
 			case PUT:
 				return new HttpPut(url);
 			case DELETE:
-				return new HttpGet(url);
+				return new HttpDelete(url);
 			default:
 				throw new RuntimeException("not support method:"+method);
 		}
