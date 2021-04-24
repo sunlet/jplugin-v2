@@ -7,7 +7,7 @@
 
 	<groupId>net.jplugin.mvn</groupId>
 	<artifactId>jplugin-core</artifactId>
-	<version>2.0.1-SNAPSHOT</version>
+	<version>2.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	
 	<name>jplugin-core</name>

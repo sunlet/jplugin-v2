@@ -11,7 +11,7 @@ import net.jplugin.core.kernel.api.PluginAnnotation;
 public class Plugin extends AbstractPlugin {
 
 	public Plugin() {
-		this.addExtensionPoint(ExtensionPoint.createSingleton("testpointtype", String.class));
+		this.addExtensionPoint(ExtensionPoint.createUnique("testpointtype", String.class));
 
 		this.addExtension(Extension.createStringExtension("testpointtype", "hello"));
 	

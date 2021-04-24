@@ -17,13 +17,13 @@ import net.jplugin.common.kits.StringKit;
 public class ExtensionPoint {
 	/**
 	 * <PRE>
-	 * 扩展点类型，分为NAMED,LIST,SINGLETON
+	 * 扩展点类型，分为NAMED,LIST,UNIQUE
 	 * NAMED: 每一个扩展都有一个唯一的名字，保存在extensionMap里面。
-	 * LISTED:扩展没有名字，或者可以重名，保存在extensionObjects里面。
-	 * SINGLETON:最多只能有一个扩展,保存在extensionObjects里面。
+	 * LIST:扩展没有名字，或者可以重名，保存在extensionObjects里面。
+	 * UNIQUE:最多只能有一个扩展,保存在extensionObjects里面。
 	 *</PRE>
 	 */
-	public enum Type {NAMED,LISTED,SINGLETON}
+	public enum Type {NAMED,LIST,UNIQUE}
 	
 	String name;
 	Class<?> extensionClass;
@@ -39,8 +39,8 @@ public class ExtensionPoint {
 	 * @param clazz
 	 * @return
 	 */
-	public static ExtensionPoint createListed(String aName,Class<?> clazz){
-		return new ExtensionPoint(aName,clazz,Type.LISTED);
+	public static ExtensionPoint createList(String aName,Class<?> clazz){
+		return new ExtensionPoint(aName,clazz,Type.LIST);
 	}
 	/**
 	 * 创建一个扩展点, 扩展为唯一名称的多个实例
@@ -57,14 +57,14 @@ public class ExtensionPoint {
 	 * @param clazz
 	 * @return
 	 */
-	public static ExtensionPoint createSingleton(String aName,Class<?> clazz){
-		return new ExtensionPoint(aName,clazz,Type.SINGLETON);
+	public static ExtensionPoint createUnique(String aName,Class<?> clazz){
+		return new ExtensionPoint(aName,clazz,Type.UNIQUE);
 	}
 	
 	
 	@Deprecated
 	public static ExtensionPoint create(String aName,Class<?> clazz){
-		return createListed(aName,clazz);
+		return createList(aName,clazz);
 	}
 	
 	/**
@@ -79,7 +79,7 @@ public class ExtensionPoint {
 		if (nameUnique) {
 			return createNamed(aName,clazz);
 		}else {
-			return createListed(aName,clazz);
+			return createList(aName,clazz);
 		}
 	}
 	
@@ -149,7 +149,7 @@ public class ExtensionPoint {
 	 * @return
 	 */
 	public <T> T getExtension(Class<T> t) {
-		if (! (this.type==Type.SINGLETON)){
+		if (! (this.type==Type.UNIQUE)){
 			throw new RuntimeException("can't call getExtension when type is not SINGLETON");
 		}
 		
@@ -220,7 +220,7 @@ public class ExtensionPoint {
 				}
 			}
 			return true;
-		}else if (this.type == Type.SINGLETON) {
+		}else if (this.type == Type.UNIQUE) {
 			return this.extensions.size()==0;
 		}else
 			return true;
