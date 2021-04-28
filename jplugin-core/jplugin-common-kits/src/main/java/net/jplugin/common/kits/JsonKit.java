@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.jplugin.common.kits.PritiveKits.Transformer;
 /**
- * Json鎿嶄綔宸ュ叿锟�?
+ * Json工具类库
  * @author liyy
  * @date 2014-05-20
  */
@@ -30,6 +30,12 @@ public class JsonKit {
 	}
 
 	//<<< 2018年8月28日修改
+	/**
+	 * 把json转换为某类型对象，此方法比json2Object更强大的一点是：支持泛型的转换,比如 转换为 List<Person>
+	 * @param json
+	 * @param type
+	 * @return
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static Object json2Object4Type(String json, Type type) {
 		Object object = null;
@@ -47,7 +53,9 @@ public class JsonKit {
 		}
 		return object;
 	}
-	
+	/**
+	 * 同上一个方法，支持原始类型和空串
+	 */
 	public static Object json2Object4TypeEx(String val, Type type) {
 		if (val==null || val.equals("")){
 			return null;
@@ -67,6 +75,11 @@ public class JsonKit {
 	}
 	//>>>2018年8月28日修改
 	
+	/**
+	 * 把对象转换为json字符串
+	 * @param object
+	 * @return
+	 */
 	public static String object2Json(Object object) {
 		StringWriter writer = new StringWriter();
 		try {
@@ -78,6 +91,13 @@ public class JsonKit {
 		return writer.toString();
 	}
 
+	/**
+	 * 把Json转换为指定类型的对象
+	 * @param <T>
+	 * @param json
+	 * @param klass
+	 * @return
+	 */
 	public static <T> T json2Object(String json, Class<T> klass) {
 		T object = null;
 		try {
@@ -89,6 +109,11 @@ public class JsonKit {
 		return object;
 	}
 
+	/**
+	 *  把JSON转换为一个顶层为Map的嵌套对象，如果内层继续是复杂结构，就把内层结构转换为Map或List混合嵌套结构
+	 * @param json
+	 * @return
+	 */
 	public static Map json2Map(String json) {
 		Map m = null;
 		try {
@@ -100,7 +125,16 @@ public class JsonKit {
 		return m;
 	}
 
+	@Deprecated
 	public static List<Map> json2ListMap(String json) {
+		return json2List(json);
+	}
+	/**
+	 * 把Json转换为List对象，如果内层继续是复杂结构，就把内层结构转换为Map或List混合嵌套结构
+	 * @param json
+	 * @return
+	 */
+	public static List json2List(String json) {
 		List m = null;
 		try {
 			if (json != null && json.length() > 0)
@@ -111,6 +145,14 @@ public class JsonKit {
 		return m;
 	}
 	
+	/**
+	 * 此方法可以使用  json2Object4Type来代替了
+	 * @param <T>
+	 * @param json
+	 * @param beanClass
+	 * @return
+	 */
+	@Deprecated
 	public static <T> List<T> json2ListBean(String json, Class<T> beanClass) {
 		List<T> m = null;
 		try {
@@ -123,7 +165,15 @@ public class JsonKit {
 		}
 		return m;
 	}
-	
+	/**
+	 *  此方法可以使用  json2Object4Type来代替了
+	 * @param <K>
+	 * @param <V>
+	 * @param json
+	 * @param keyClass
+	 * @param beanClass
+	 * @return
+	 */
 	public static <K, V> Map json2MapBean(String json, Class<K> keyClass, Class<V> beanClass) {
 		Map m = null;
 		try {
@@ -195,7 +245,7 @@ public class JsonKit {
 	}
 
 	/**
-	 * 锟斤拷强锟斤拷转锟斤拷锟斤拷锟斤拷锟节伙拷锟斤拷锟斤拷锟斤拷直锟斤拷转锟斤拷锟街凤拷锟斤拷
+	 * Json转换为对象，支持原始类型和空字符串（空字符串或者null转为空对象）
 	 * @param val
 	 * @param clz
 	 * @return
