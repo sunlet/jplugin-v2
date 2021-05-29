@@ -141,6 +141,9 @@ public class Extension {
 				this.extensionObject = this.propertyList.get(0).getValue();
 			}else{
 				this.extensionObject = clazz.newInstance();
+				//处理extension工厂机制
+				this.extensionObject = resolveFactory(this.extensionObject);
+				
 				PluginEnvirement.getInstance().resolveRefAnnotation(this.extensionObject);
 	
 				//带属性的加载方式
@@ -148,6 +151,14 @@ public class Extension {
 					setProperty(this.extensionObject,this.propertyList);
 				}
 			}
+		}
+	}
+	
+	private Object resolveFactory(Object o) {
+		if (o instanceof IExtensionFactory) {
+			return ((IExtensionFactory)o).create();
+		}else {
+			return o;
 		}
 	}
 	
