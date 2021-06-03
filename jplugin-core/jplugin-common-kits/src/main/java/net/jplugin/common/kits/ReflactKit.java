@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -296,6 +297,28 @@ public class ReflactKit {
 				names.add(m.getName());
 		}
 		return names;
+	}
+	/**
+	 * 获取对实现的某个接口的第一个泛型参数类型
+	 * @param cls
+	 * @param intf
+	 * @return
+	 */
+	public static Type getParameterizedIntfArg(Class cls,Class intf) {
+		Type[] intfClazzs = cls.getGenericInterfaces();
+		
+		for (Type tp:intfClazzs) {
+			if (tp.equals(intf)) {
+				if (tp instanceof ParameterizedType) {
+					ParameterizedType parameterizedType = (ParameterizedType) tp;
+			        Type actualtype = parameterizedType.getActualTypeArguments()[0];
+			        return actualtype;
+				}else {
+					return null;
+				}
+			}
+		}
+		return null;
 	}
 	
 	public static void main(String[] arg){

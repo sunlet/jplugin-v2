@@ -1,5 +1,7 @@
 package net.jplugin.core.kernel.api;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -214,13 +216,26 @@ public abstract class AbstractPlugin implements IPlugin {
 				continue;
 			}
 			
-			if(! ReflactKit.isTypeOf(e.getClazz(),finder.getExtensionClass())){
-				errors.add(new PluginError(this.getName(),"The extension is not sub class of the point required. extClass="+e.getClazz()+" required="+finder.getExtensionClass()+" point="+pname));
-			}
-			
-			if (e.getClass().equals(String.class)){
-				if (e.getProperties().size()!=1){
-					errors.add(new PluginError(this.getName(),"String type extension must has one property with the val."+e.getName() +" pointname="+pname));
+			if (ReflactKit.isTypeOf(e.getClazz() , IExtensionFactory.class)){
+				Type paraArgType = ReflactKit.getParameterizedIntfArg(e.getClazz(),IExtensionFactory.class);
+				Class paraArgClazz = (Class)paraArgType;
+				if (paraArgClazz!=null) {
+					//判断具体的泛型必须匹配
+					if(! ReflactKit.isTypeOf(paraArgClazz,finder.getExtensionClass())){
+						errors.add(new PluginError(this.getName(),"The parameterized type is not required type. extClass="+e.getClazz()+" required="+finder.getExtensionClass()+" point="+pname));
+					}
+				}else {
+					//can't check
+				}
+			}else {
+				if(! ReflactKit.isTypeOf(e.getClazz(),finder.getExtensionClass())){
+					errors.add(new PluginError(this.getName(),"The extension is not sub class of the point required. extClass="+e.getClazz()+" required="+finder.getExtensionClass()+" point="+pname));
+				}
+				
+				if (e.getClass().equals(String.class)){
+					if (e.getProperties().size()!=1){
+						errors.add(new PluginError(this.getName(),"String type extension must has one property with the val."+e.getName() +" pointname="+pname));
+					}
 				}
 			}
 		}

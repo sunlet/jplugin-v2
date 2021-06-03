@@ -276,6 +276,19 @@ public class SqlHandlerVisitorTest {
 		SqlHandlerVisitorForMixed v = new SqlHandlerVisitorForMixed("sssss","1001");
 		String from,to;
 		
+		
+		from = "SELECT c.order_state "+ 
+		" FROM    channel_order c "+
+		" WHERE "+
+		" not exists (select 1 from channel_refund r where r.c_order_num = c.c_order_num ) ";
+        
+		to = v.handle(from);
+		System.out.println();
+		System.out.println(from);
+		System.out.println(to);
+		
+		
+		
 		from = "select * from t1 t where f1=1 and f2=2 or f3=3 and f4=4";
 		to = v.handle(from);
 //		AssertKit.assertEqual("SELECT * FROM sssss.table1, sssss.table2 LEFT JOIN sssss.t3 AS f ON f.column1 = '1001' WHERE sssss.table2.column1 = '1001' AND sssss.table1.column1 = '1001' AND (A = 1 OR C = 3 AND f1 IN (SELECT * FROM sssss.t3, sssss.t4 WHERE sssss.t4.column1 = '1001' AND sssss.t3.column1 = '1001' AND (t3.x = t4.y)))", to);

@@ -647,7 +647,8 @@ public class SqlHandlerVisitorForMixed
 	}
 
 	@Override
-	public void visit(NotExpression arg0) {
+	public void visit(NotExpression notExp) {
+		notExp.getExpression().accept(this);
 	}
 
 	@Override
